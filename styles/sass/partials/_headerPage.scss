@@ -1,15 +1,29 @@
+@use "./variables" as *;
+//For font calculations use:
+
+//https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+
 header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
     width: 100%;
     height: 100vh;
+
+    & .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 
+h1 {
+    font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
+    margin-top: 40vh;
+    text-align: center;
+}
+
 .button {
+
     position: relative;
     display: block;
     background: transparent;
@@ -20,10 +34,12 @@ header {
     font-size: 20px;
     text-decoration: none;
     text-transform: uppercase;
-    color: #e04e5e;
-    margin: 40px auto;
+    margin-top: 60px;
     font-family: Helvetica, Arial, sans-serif;
     box-sizing: border-box;
+    color: $solidWhite;
+    border: none;
+    z-index: 2;
 }
 
 .button:before,
@@ -32,7 +48,7 @@ header {
     content: '';
     width: 300px;
     left: 0px;
-    height: 34px;
+    height: 37px;
     z-index: -1;
 }
 
@@ -49,7 +65,7 @@ header {
 
 .button.border:before,
 .button.border:after {
-    border: 4px solid #e04e5e;
+    border: 4px solid $solidWhite;
 }
 
 .button.border:before {
@@ -66,14 +82,9 @@ header {
 
 .button.border:hover:before,
 .button.border:hover:after {
-    background: #e04e5e;
+    background: darken($color: $secondaryColour, $amount: 25%)
 }
 
-.button.border:hover {
-    color: #fff;
-}
-
-
-h1 {
-    text-align: center;
+.button:hover {
+    cursor: pointer;
 }

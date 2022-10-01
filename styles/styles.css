@@ -226,6 +226,12 @@ html {
   overflow: hidden;
 }
 
+.wrapper {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
 @font-face {
   font-family: "copperplate";
   src: url(../assets/fonts/copperplate_gothic_bold_regular-webfont.woff2) format("woff2"), url(../assets/fonts/copperplate_gothic_bold_regular-webfont.woff) format("woff"), url(../assets/fonts/copperplate_gothic_bold_regular-webfont.ttf) format("truetype");
@@ -244,6 +250,11 @@ h1 {
 }
 
 header {
+  background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
+  width: 100%;
+  height: 100vh;
+}
+header .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -251,15 +262,15 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
-  width: 100%;
-  height: 100vh;
+}
+
+h1 {
+  font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
+  margin-top: 40vh;
+  text-align: center;
 }
 
 .button {
@@ -273,11 +284,13 @@ header {
   font-size: 20px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #e04e5e;
-  margin: 40px auto;
+  margin-top: 60px;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  z-index: 2;
 }
 
 .button:before,
@@ -286,7 +299,7 @@ header {
   content: "";
   width: 300px;
   left: 0px;
-  height: 34px;
+  height: 37px;
   z-index: -1;
 }
 
@@ -304,7 +317,7 @@ header {
 /* Button Border Style */
 .button.border:before,
 .button.border:after {
-  border: 4px solid #e04e5e;
+  border: 4px solid #FFF;
 }
 
 .button.border:before {
@@ -320,13 +333,9 @@ header {
 /* Button hover styles */
 .button.border:hover:before,
 .button.border:hover:after {
-  background: #e04e5e;
+  background: #333f7d;
 }
 
-.button.border:hover {
-  color: #fff;
-}
-
-h1 {
-  text-align: center;
+.button:hover {
+  cursor: pointer;
 }
