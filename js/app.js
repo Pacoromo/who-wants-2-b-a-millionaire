@@ -21,6 +21,11 @@ A second page:
 -start listening for the user answer
 -start the timer
 -play a background sound
+
+-check if user wants to walk away
+    if yes: check the next lowest threshold
+    print the results
+
 -make a function to compare selection
 -play a sound when user makes a selection
 -if no selection is made and the timer runs out the -answer is considered as wrong
@@ -33,3 +38,4 @@ A second page:
         If user won: show the results screen
     -if answer was wrong
         -Show the results screen */
+
