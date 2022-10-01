@@ -1,33 +1,47 @@
 @use "./variables" as *;
-//For font calculations use:
 
-//https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
-
-header {
-    position: absolute;
-    top: 0;
-    left: 0;
+.rules-screen {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    ////
     opacity: 0;
     pointer-events: none;
-    //https://codepen.io/hari_shanx/pen/NWzzKE
+
+    li {
+        font-size: clamp(0.8rem, 0.7273rem + 0.4545vw, 1rem);
+        line-height: 1.5;
+    }
+}
+
+h2 {
+    font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
+    text-align: center;
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input[type="text"] {
+        width: 235px;
+        margin-top: .4em;
+    }
 
     .button {
         position: relative;
         display: block;
         background: transparent;
-        width: 300px;
+        width: 250px;
         height: 80px;
         line-height: 80px;
         text-align: center;
         font-size: 1.5rem;
         text-decoration: none;
         text-transform: uppercase;
-        margin-top: 60px;
         box-sizing: border-box;
         color: $solidWhite;
         border: none;
@@ -42,7 +56,7 @@ header {
         &:after {
             position: absolute;
             content: '';
-            width: 300px;
+            width: 250px;
             left: 0px;
             height: 37px;
             z-index: -1;
@@ -75,14 +89,7 @@ header {
         /* Button hover styles */
         &.border:hover:before,
         &.border:hover:after {
-            // background: darken($color: $secondaryColour, $amount: 25%)
             background-color: $accentColour;
         }
     }
-}
-
-h1 {
-    font-size: clamp(2rem, 0.9091rem + 5.4545vw, 5rem);
-    margin-top: 40vh;
-    text-align: center;
 }

@@ -240,21 +240,133 @@ html {
   font-family: "franklin";
   src: url(../assets/fonts/librefranklin-extrabold-webfont.woff2) format("woff2"), url(../assets/fonts/librefranklin-extrabold-webfont.woff) format("woff"), url(../assets/fonts/librefranklin-extrabold-webfont.ttf) format("truetype");
 }
-body {
-  font-family: "franklin", sans-serif;
+html {
+  font-size: 125%;
 }
 
-h1 {
-  font-family: "copperplate", sans-serif;
+body {
+  font-family: "franklin", sans-serif;
   color: #FFF;
 }
 
-header {
-  background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
-  width: 100%;
-  height: 100vh;
+h1,
+button {
+  font-family: "copperplate", sans-serif;
 }
-header .wrapper {
+
+body {
+  background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+header .button {
+  position: relative;
+  display: block;
+  background: transparent;
+  width: 300px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-top: 60px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  z-index: 2;
+  /* Button Border Style */
+  /* Button hover styles */
+}
+header .button:hover {
+  cursor: pointer;
+}
+header .button:before, header .button:after {
+  position: absolute;
+  content: "";
+  width: 300px;
+  left: 0px;
+  height: 37px;
+  z-index: -1;
+}
+header .button:before {
+  -webkit-transform: perspective(15px) rotateX(3deg);
+          transform: perspective(15px) rotateX(3deg);
+}
+header .button:after {
+  top: 40px;
+  -webkit-transform: perspective(15px) rotateX(-3deg);
+          transform: perspective(15px) rotateX(-3deg);
+}
+header .button.border:before, header .button.border:after {
+  border: 4px solid #FFF;
+}
+header .button.border:before {
+  border-bottom: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+header .button.border:after {
+  border-top: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+header .button.border:hover:before, header .button.border:hover:after {
+  background-color: #DC9E3F;
+}
+
+h1 {
+  font-size: clamp(2rem, 0.9091rem + 5.4545vw, 5rem);
+  margin-top: 40vh;
+  text-align: center;
+}
+
+.rules-screen {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.rules-screen li {
+  font-size: clamp(0.8rem, 0.7273rem + 0.4545vw, 1rem);
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
+  text-align: center;
+  margin: 0;
+}
+
+form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -266,76 +378,84 @@ header .wrapper {
       -ms-flex-align: center;
           align-items: center;
 }
-
-h1 {
-  font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
-  margin-top: 40vh;
-  text-align: center;
+form input[type=text] {
+  width: 235px;
+  margin-top: 0.4em;
 }
-
-.button {
+form .button {
   position: relative;
   display: block;
   background: transparent;
-  width: 300px;
+  width: 250px;
   height: 80px;
   line-height: 80px;
   text-align: center;
-  font-size: 20px;
+  font-size: 1.5rem;
   text-decoration: none;
   text-transform: uppercase;
-  margin-top: 60px;
-  font-family: Helvetica, Arial, sans-serif;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: #FFF;
   border: none;
   z-index: 2;
+  /* Button Border Style */
+  /* Button hover styles */
 }
-
-.button:before,
-.button:after {
+form .button:hover {
+  cursor: pointer;
+}
+form .button:before, form .button:after {
   position: absolute;
   content: "";
-  width: 300px;
+  width: 250px;
   left: 0px;
   height: 37px;
   z-index: -1;
 }
-
-.button:before {
+form .button:before {
   -webkit-transform: perspective(15px) rotateX(3deg);
           transform: perspective(15px) rotateX(3deg);
 }
-
-.button:after {
+form .button:after {
   top: 40px;
   -webkit-transform: perspective(15px) rotateX(-3deg);
           transform: perspective(15px) rotateX(-3deg);
 }
-
-/* Button Border Style */
-.button.border:before,
-.button.border:after {
+form .button.border:before, form .button.border:after {
   border: 4px solid #FFF;
 }
-
-.button.border:before {
+form .button.border:before {
   border-bottom: none;
   /* to prevent the border-line showing up in the middle of the shape */
 }
-
-.button.border:after {
+form .button.border:after {
   border-top: none;
   /* to prevent the border-line showing up in the middle of the shape */
 }
-
-/* Button hover styles */
-.button.border:hover:before,
-.button.border:hover:after {
-  background: #333f7d;
+form .button.border:hover:before, form .button.border:hover:after {
+  background-color: #DC9E3F;
 }
 
-.button:hover {
-  cursor: pointer;
+.game-board-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 1;
+  pointer-events: none;
+}
+.game-board-screen ul {
+  list-style-type: none;
+  padding: 0;
 }
