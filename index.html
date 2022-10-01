@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./js/app.js"></script>
+    <link rel="stylesheet" href="./styles/styles.css">
     <title>Who wants to be a millionaire?</title>
 </head>
 
 <body>
     <header>
         <h1>Who wants to be a millionaire?</h1>
-        <button>Enter</button>
+        <a class="button ribbon-outset border">Enter</a>
     </header>
-    <section id="game-rules-screen">
+    <section id="game-rules-screen" hidden>
         <h2>Game Rules:</h2>
         <ul>
             <li>You have a total of 15 multiple choice questions</li>
@@ -33,7 +33,7 @@
             <button id="start-btn">Start</button>
         </form>
     </section><!-- /game rules section-->
-    <section id="game-board">
+    <section id="game-board" hidden>
         <div class="game-board">
             <!-- <div class="player-options">
                 <button id="walk-away-btn">Walk Away</button>
@@ -81,14 +81,14 @@
             </div>
         </div>
     </section><!-- /Game board-->
-    <div class="modal-screen">
+    <div class="modal-screen" hidden>
         <div class="pop-up-container">
             <div class="message-container">
                 <!-- Message Generated-->
             </div>
         </div>
     </div>
+    <script src="./js/app.js"></script>
 </body>
 
 </html>
-
