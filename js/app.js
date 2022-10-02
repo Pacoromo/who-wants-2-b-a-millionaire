@@ -1,21 +1,29 @@
 const app = {};
 
+app.apiURL = "https://opentdb.com/api.php";
+app.sessionTokenUrl = "https://opentdb.com/api_token.php?command=request"; //API token URL (Necessary to avoid repeating questions in a session)
+
 //*************************************************/
 //******************Functions*********************//
 //*************************************************/
+
+// Get API token  (required by API to avoid repeating questions)
+
+app.getToken = () => {
+  fetch(app.sessionTokenUrl)
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      app.token = jsonResponse.token;
+    });
+};
+
+//Screen display toggle
 
 app.toggleScreen = (element) => {
   element.classList.toggle("non-visible");
 };
 
 //Show start screen
-
-/*
-A landing page with the app heading "Who wants to be a millionaire"
-
-A backrounbd related to the TV Show
-    -An Enter button
-*/
 
 app.startScreen = () => {
   const header = document.querySelector("header");
@@ -61,10 +69,92 @@ app.rulesScreen = () => {
 
 /*
 A third page with the game's board
--a section showing the current question
+-a section showing the current question and player's name
 -a section with 4 buttons with every option
 -a score section hightlighting the current price pool
+*/
+app.gameBoardScreen = () => {
+  const gameBoardsection = document.querySelector(".game-board-screen");
+  const playerNameDisplay = document.querySelector(".player-name");
+  playerNameDisplay.textContent = app.playerName;
+  app.toggleScreen(gameBoardsection);
+  app.loadQuestion();
+};
 
+//Load questions method
+
+app.loadQuestion = () => {
+  //requests information from the API
+  //use the URL constructor to specify the parameters we wish to include in our API endpoint (AKA in the request we are making to the API)
+  const url = new URL(app.apiURL);
+  url.search = new URLSearchParams({
+    // pass in our seession token as a parameter
+    token: app.token,
+    amount: 1,
+    type: "multiple",
+  });
+  // Use the fetch API to make a request to the open trivia API endpoint
+  // pass in new URL featuring params provided by the URLSearchParams constructor
+  fetch(url)
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      /* Te response is an object with the next structure 
+      {
+        response_code; number,
+        results: [{
+          0: {
+            category: string,
+            correct_answer: string,
+            difficulty: string,
+            incorrect_answers: [string, string, string], (note: the API returns answers in HTML format)
+            question: string,
+            type: multiple
+          }
+        }]
+      }
+      We are interested in the jsonResponse.results[0] object.
+      */
+      //Call a method to break down information from the response object\
+      app.breakDownInfo(jsonResponse.results[0]);
+      // console.log(jsonResponse.results[0]);
+      //Call a method to print information on the board
+      //app.printGameBoardInfo();
+    });
+};
+
+//break down info method
+
+app.breakDownInfo = (questionInfo) => {
+  app.currentQuestion = questionInfo.question;
+  app.correctAnswer = questionInfo.correct_answer;
+  console.log(app.correctAnswer);
+  const wrongAnswers = questionInfo.incorrect_answers; // the Api gives us 3 wrong answers
+  wrongAnswers.push(app.correctAnswer); // make an array with all posible answers
+  app.answerOptions = app.shuffleAnswers(wrongAnswers); // shuffle the array and store it
+  console.log(app.answerOptions);
+};
+
+
+//Shuffle answers method https://bost.ocks.org/mike/shuffle/
+
+app.shuffleAnswers = (array) => {
+  let m = array.length,
+    t,
+    i;
+  // While there remain elements to shuffle…
+  while (m) {
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+  return array;
+};
+
+
+/*
 -print the question that we have obtained from The API
 -print the 4 possible answers as buttons
 -start listening for the user answer
@@ -88,16 +178,10 @@ print the results
 -if answer was wrong
     -Show the results screen */
 
-app.gameBoardScreen = () => {
-  const gameBoardsection = document.querySelector(".game-board-screen");
-  const playerNameDisplay = document.querySelector(".player-name");
-  playerNameDisplay.textContent = app.playerName;
-  app.toggleScreen(gameBoardsection);
-};
-
 //App Init
 app.init = () => {
   app.startScreen();
+  app.getToken();
 };
 
 app.init();
