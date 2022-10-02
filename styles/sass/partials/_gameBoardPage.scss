@@ -13,6 +13,9 @@
     opacity: 1;
     pointer-events: initial;
     transition: all .3s;
+    p {
+        text-transform: capitalize;
+    }
     ul {
         list-style-type: none;
         padding: 0;

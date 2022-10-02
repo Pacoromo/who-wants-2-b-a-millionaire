@@ -473,6 +473,9 @@ form .button.border:hover:before, form .button.border:hover:after {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+.game-board-screen p {
+  text-transform: capitalize;
+}
 .game-board-screen ul {
   list-style-type: none;
   padding: 0;
