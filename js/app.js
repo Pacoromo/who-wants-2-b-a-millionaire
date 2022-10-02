@@ -28,9 +28,10 @@ app.startScreen = () => {
 
 app.rulesScreen = () => {
   const rulesSection = document.querySelector(".rules-screen");
-  const startBtn = document.querySelector(".rules-screen form");
+  const form = document.querySelector(".rules-screen form");
   app.toggleScreen(rulesSection);
-  startBtn.addEventListener(
+  form.reset();
+  form.addEventListener(
     "submit",
     (e) => {
       e.preventDefault();
