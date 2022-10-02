@@ -118,7 +118,7 @@ app.loadQuestion = () => {
       app.breakDownInfo(jsonResponse.results[0]);
       // console.log(jsonResponse.results[0]);
       //Call a method to print information on the board
-      //app.printGameBoardInfo();
+      app.printGameBoardInfo();
     });
 };
 
@@ -127,13 +127,12 @@ app.loadQuestion = () => {
 app.breakDownInfo = (questionInfo) => {
   app.currentQuestion = questionInfo.question;
   app.correctAnswer = questionInfo.correct_answer;
-  console.log(app.correctAnswer);
+  // console.log(app.correctAnswer);
   const wrongAnswers = questionInfo.incorrect_answers; // the Api gives us 3 wrong answers
   wrongAnswers.push(app.correctAnswer); // make an array with all posible answers
   app.answerOptions = app.shuffleAnswers(wrongAnswers); // shuffle the array and store it
-  console.log(app.answerOptions);
+  // console.log(app.answerOptions);
 };
-
 
 //Shuffle answers method https://bost.ocks.org/mike/shuffle/
 
@@ -153,17 +152,31 @@ app.shuffleAnswers = (array) => {
   return array;
 };
 
+app.printGameBoardInfo = () => {
+  //-play a background sound
+  //start a timer
+  //-print the question that we have obtained from The API
+  const question = document.querySelector(".question");
+  question.innerHTML = app.currentQuestion;
+  const buttons = document.querySelectorAll(".option-btn");
+
+  app.answerOptions.forEach((answerOption, index) => {
+    //-print the 4 possible answers as buttons
+    buttons[index].innerHTML = answerOption;
+    //-start listening for the user answer
+    buttons[index].addEventListener("click", function () {
+      app.optionSelected = this.textContent;
+      console.log(app.optionSelected);
+      //check if answer is correct
+      // app.checkAnswerResults(+optionSelected);
+    });
+  });
+  //-check if user wants to walk away
+  //if yes: check the next lowest threshold
+  //Print the results
+};
 
 /*
--print the question that we have obtained from The API
--print the 4 possible answers as buttons
--start listening for the user answer
--start the timer
--play a background sound
-
--check if user wants to walk away
-if yes: check the next lowest threshold
-print the results
 
 -make a function to compare selection
 -play a sound when user makes a selection
