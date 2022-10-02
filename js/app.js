@@ -1,3 +1,60 @@
+const app = {};
+
+//*************************************************/
+//******************Functions*********************//
+//*************************************************/
+
+app.toggleScreen = (element) => {
+  element.classList.toggle("non-visible");
+};
+
+//Show start screen
+
+app.startScreen = () => {
+  const header = document.querySelector("header");
+  const enterBtn = document.getElementById("enter-btn");
+  app.toggleScreen(header);
+  enterBtn.addEventListener(
+    "click",
+    () => {
+      app.toggleScreen(header);
+      app.rulesScreen();
+    },
+    { once: true }
+  );
+};
+
+//Show rules screen
+
+app.rulesScreen = () => {
+  const rulesSection = document.querySelector(".rules-screen");
+  const startBtn = document.querySelector(".rules-screen form");
+  app.toggleScreen(rulesSection);
+  startBtn.addEventListener(
+    "submit",
+    (e) => {
+      e.preventDefault();
+      app.toggleScreen(rulesSection);
+      app.gameBoardScreen();
+    },
+    { once: true }
+  );
+};
+
+//Show gameboard screen
+
+app.gameBoardScreen = () => {
+  const gameBoardsection = document.querySelector(".game-board-screen");
+  app.toggleScreen(gameBoardsection);
+};
+
+//App Init
+app.init = () => {
+  app.startScreen();
+};
+
+app.init();
+
 /**
 //Who wants to be a millionaire
 
@@ -38,4 +95,3 @@ A second page:
         If user won: show the results screen
     -if answer was wrong
         -Show the results screen */
-

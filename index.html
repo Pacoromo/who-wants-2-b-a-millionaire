@@ -11,11 +11,12 @@
 
 <body>
     <div class="wrapper">
-        <header>
+        <header class="non-visible">
             <h1>Who wants to be a millionaire?</h1>
-            <button class="button ribbon-outset border">Enter</button>
+            <button id="enter-btn" class="button ribbon-outset border">Enter</button>
         </header>
-        <section id="game-rules-screen" class="rules-screen">
+
+        <section id="game-rules-screen" class="rules-screen non-visible">
             <h2>Game Rules:</h2>
             <ul>
                 <li>You have a total of 15 multiple choice questions</li>
@@ -30,11 +31,12 @@
             </ul>
             <form action="">
                 <label for="player-name">Player's Name</label>
-                <input type="text" id="player-name">
+                <input type="text" id="player-name" required>
                 <button id="start-btn" class="button ribbon-outset border">Start</button>
             </form>
         </section><!-- /game rules section-->
-        <section id="game-board" class="game-board-screen">
+
+        <section id="game-board" class="game-board-screen non-visible">
             <div class="game-board">
                 <!-- <div class="player-options">
                 <button id="walk-away-btn">Walk Away</button>
@@ -82,7 +84,8 @@
                 </div>
             </div>
         </section><!-- /Game board-->
-        <div class="modal-screen" hidden>
+        
+        <div class="modal-screen non-visible">
             <div class="pop-up-container">
                 <div class="message-container">
                     <!-- Message Generated-->
