@@ -207,7 +207,7 @@ app.setTimer = () => {
     app.timerDisplay.textContent = timer;
     //4check timing
     if (timer === 0) {
-      // showResults();
+      // showResults(); Pending
     }
   }, 1000);
 }; //timer
@@ -220,15 +220,16 @@ app.checkAnswerResults = () => {
     switch (app.currentQuestion) {
       case 5:
         app.currentThreshold = document.querySelector(".money-5");
-        //show the option to leave with app.currentPrice
+        //show the option to leave with app.currentPrice... Pending
         break;
       case 10:
         app.currentThreshold = document.querySelector(".money-10");
-        //show the option to leave with app.currentPrice
+        //show the option to leave with app.currentPrice...Pending
         break;
-      default:
-        app.currentPrize = "";
-        console.log(app.currentPrize);
+      case 15:
+        // The user has won...Pending
+        default:
+      
         break;
     }
   }
