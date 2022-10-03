@@ -26,19 +26,18 @@ app.toggleScreen = (element) => {
 //Show start screen
 
 app.startScreen = () => {
-  const header = document.querySelector("header");
   const enterBtn = document.getElementById("enter-btn");
-  app.toggleScreen(header);
   enterBtn.addEventListener(
     "click",
     () => {
+      const header = document.querySelector("header");
       app.toggleScreen(header);
       //Call next screen
       app.rulesScreen();
     },
     { once: true }
   );
-};
+}; //show start
 
 //Show rules screen
 /*  
@@ -57,13 +56,14 @@ app.rulesScreen = () => {
     (e) => {
       e.preventDefault();
       app.playerName = document.getElementById("player-name").value; //namespace scope
+      app.currentQuestionNumber = 1; //initialize game
       app.toggleScreen(rulesSection);
       //Call next screen
       app.gameBoardScreen();
     },
     { once: true }
   );
-};
+}; //show rules
 
 //Show gameboard screen
 
@@ -79,7 +79,7 @@ app.gameBoardScreen = () => {
   playerNameDisplay.textContent = app.playerName;
   app.toggleScreen(gameBoardsection);
   app.loadQuestion();
-};
+}; //show game board
 
 //Load questions method
 
@@ -120,7 +120,7 @@ app.loadQuestion = () => {
       //Call a method to print information on the board
       app.printGameBoardInfo();
     });
-};
+}; //load questions
 
 //break down info method
 
@@ -132,7 +132,7 @@ app.breakDownInfo = (questionInfo) => {
   wrongAnswers.push(app.correctAnswer); // make an array with all posible answers
   app.answerOptions = app.shuffleAnswers(wrongAnswers); // shuffle the array and store it
   // console.log(app.answerOptions);
-};
+}; //break down info
 
 //Shuffle answers method https://bost.ocks.org/mike/shuffle/
 
@@ -150,34 +150,94 @@ app.shuffleAnswers = (array) => {
     array[i] = t;
   }
   return array;
-};
+}; //Shuffle array
+
+//print board method
 
 app.printGameBoardInfo = () => {
-  //-play a background sound
-  //start a timer
+  /* pending
+  -play a background sound
+  */
+  app.currentQuestionNumber += 1; // every question loaded
+
+  //start a timer for the first 5 questions
+  app.timerDisplay = document.querySelector(".timer");
+  if (app.currentQuestionNumber <= 5) {
+    app.setTimer();
+  } else {
+    app.timerDisplay.textContent = "";
+  }
+
   //-print the question that we have obtained from The API
   const question = document.querySelector(".question");
   question.innerHTML = app.currentQuestion;
   const buttons = document.querySelectorAll(".option-btn");
+
+  /* pending
+  //-check if user wants to walk away
+*/
 
   app.answerOptions.forEach((answerOption, index) => {
     //-print the 4 possible answers as buttons
     buttons[index].innerHTML = answerOption;
     //-start listening for the user answer
     buttons[index].addEventListener("click", function () {
+      /* pending
+  -play a background sound
+  */
+      //stop timer
+      clearInterval(app.timer);
       app.optionSelected = this.textContent;
       console.log(app.optionSelected);
-      //check if answer is correct
-      // app.checkAnswerResults(+optionSelected);
+      //check answer
+      app.checkAnswerResults();
     });
   });
-  //-check if user wants to walk away
-  //if yes: check the next lowest threshold
-  //Print the results
+}; //print board
+
+//Timer method
+
+app.setTimer = () => {
+  let timer = 15;
+  app.timerDisplay.textContent = timer; //display first value
+
+  //start counting
+  app.timer = setInterval(function () {
+    timer -= 1; //Every Second
+    app.timerDisplay.textContent = timer;
+    //4check timing
+    if (timer === 0) {
+      // showResults();
+    }
+  }, 1000);
+}; //timer
+
+//check answers method
+
+app.checkAnswerResults = () => {
+  if (app.optionSelected === app.correctAnswer) {
+    //check if we are in a threshold prize
+    switch (app.currentQuestion) {
+      case 5:
+        app.currentThreshold = document.querySelector(".money-5");
+        //show the option to leave with app.currentPrice
+        break;
+      case 10:
+        app.currentThreshold = document.querySelector(".money-10");
+        //show the option to leave with app.currentPrice
+        break;
+      default:
+        app.currentPrize = "";
+        console.log(app.currentPrize);
+        break;
+    }
+  }
 };
 
 /*
 
+if yes: check the next lowest threshold
+Print the results
 -make a function to compare selection
 -play a sound when user makes a selection
 -if no selection is made and the timer runs out the -answer is considered as wrong
