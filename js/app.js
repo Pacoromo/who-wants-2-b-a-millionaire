@@ -56,7 +56,7 @@ app.rulesScreen = () => {
     (e) => {
       e.preventDefault();
       app.playerName = document.getElementById("player-name").value; //namespace scope
-      app.currentQuestionNumber = 1; //initialize game
+      app.currentQuestionNumber = 14; //initialize game
       app.toggleScreen(rulesSection);
       //Call next screen
       app.gameBoardScreen();
@@ -98,7 +98,7 @@ app.loadQuestion = () => {
   fetch(url)
     .then((response) => response.json())
     .then((jsonResponse) => {
-      /* Te response is an object with the next structure 
+      /* The response is an object with the next structure 
       {
         response_code; number,
         results: [{
@@ -158,8 +158,19 @@ app.printGameBoardInfo = () => {
   /* pending
   -play a background sound
   */
-  app.currentQuestionNumber += 1; // every question loaded
-
+ // if current question is 5 or 10 
+ //print prize method:
+ //optional sound effect(Pending)
+ //add that prize to the user's prize variable (Pending)
+ //print the current prize element method
+ 
+ //then check if we are at question < 0 
+ //print end of game screen method with $1,000,000
+ 
+ //Add the class .active-prize to the current li[index]
+ 
+ 
+ app.currentQuestionNumber -= 1; // every question loaded
   //start a timer for the first 5 questions
   app.timerDisplay = document.querySelector(".timer");
   if (app.currentQuestionNumber <= 5) {
@@ -215,24 +226,22 @@ app.setTimer = () => {
 //check answers method
 
 app.checkAnswerResults = () => {
-  if (app.optionSelected === app.correctAnswer) {
-    //check if we are in a threshold prize
-    switch (app.currentQuestion) {
-      case 5:
-        app.currentThreshold = document.querySelector(".money-5");
-        //show the option to leave with app.currentPrice... Pending
-        break;
-      case 10:
-        app.currentThreshold = document.querySelector(".money-10");
-        //show the option to leave with app.currentPrice...Pending
-        break;
-      case 15:
-        // The user has won...Pending
-        default:
+  /* check if answer is R/W
+
+      if correct:
+        play a sound of correct answer
+        we call for next question app.loadQuestion();
       
-        break;
-    }
-  }
+      if wrong:
+        showResults(); Pending// print a message with the earned amount
+
+
+
+
+    */
+  
+
+
 };
 
 /*
@@ -290,3 +299,23 @@ app.init();
         If user won: show the results screen
     -if answer was wrong
         -Show the results screen */
+
+
+        // if (app.optionSelected === app.correctAnswer) {
+        //   //check if we are in a threshold prize
+        //   switch (app.currentQuestion) {
+        //     case 5:
+        //       app.currentThreshold = document.querySelector(".money-5");
+        //       //show the option to leave with app.currentPrice... Pending
+        //       break;
+        //     case 10:
+        //       app.currentThreshold = document.querySelector(".money-10");
+        //       //show the option to leave with app.currentPrice...Pending
+        //       break;
+        //     case 15:
+        //       // The user has won...Pending
+        //       default:
+            
+        //       break;
+        //   }
+        // }
