@@ -164,10 +164,10 @@ app.printGameBoardInfo = () => {
  //add that prize to the user's prize variable (Pending)
  //print the current prize element method
  
- //then check if we are at question < 0 
- //print end of game screen method with $1,000,000
+ //then check if we are at question < 0
+ // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
  
- //Add the class .active-prize to the current li[index]
+ //Add the class .active-prize to the current li[index](style accordingly)
  
  
  app.currentQuestionNumber -= 1; // every question loaded
@@ -218,7 +218,7 @@ app.setTimer = () => {
     app.timerDisplay.textContent = timer;
     //4check timing
     if (timer === 0) {
-      // showResults(); Pending
+      // showResults(message); Pending
     }
   }, 1000);
 }; //timer
@@ -233,7 +233,7 @@ app.checkAnswerResults = () => {
         we call for next question app.loadQuestion();
       
       if wrong:
-        showResults(); Pending// print a message with the earned amount
+        showResults(sorry you go home with no money); Pending// print a message with the earned amount
 
 
 
@@ -294,7 +294,6 @@ app.init();
 -play a sound when answer is right
 
     -If answer was right:
-        -increase the score
         -Check if user won
         If user won: show the results screen
     -if answer was wrong
