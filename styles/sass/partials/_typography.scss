@@ -21,12 +21,12 @@ html {
     font-size: 125%;
 }
 
-body {
+body,
+button {
     font-family: "franklin", sans-serif;
     color: $solidWhite;
 }
 
-h1,
-button {
+h1 {
     font-family: "copperplate", sans-serif;
 }

@@ -13,13 +13,13 @@
     <div class="wrapper">
         <header>
             <h1>Who wants to be a millionaire?</h1>
-            <button class="button ribbon-outset border">Enter</button>
+            <button id="enter-btn" class="button ribbon-outset border">Enter</button>
         </header>
-        <section id="game-rules-screen" class="rules-screen">
+
+        <section id="game-rules-screen" class="rules-screen non-visible">
             <h2>Game Rules:</h2>
             <ul>
                 <li>You have a total of 15 multiple choice questions</li>
-                <li>You have the option to quit any time and keep the money</li>
                 <li>You have 15 seconds to answer the first 5 questions</li>
                 <li>Question 6 to 10 you have 30 seconds to answer</li>
                 <li>Question 11 to 14 you have 45 seconds</li>
@@ -27,14 +27,16 @@
                     which can be used only once</li>
                 <li>You have 2 guaranteed thresholds during the game
                     ($1000 and $32,000)</li>
+                <li>You have the option to quit any time and keep the guaranteed amount</li>
             </ul>
             <form action="">
                 <label for="player-name">Player's Name</label>
-                <input type="text" id="player-name">
+                <input type="text" id="player-name" required>
                 <button id="start-btn" class="button ribbon-outset border">Start</button>
             </form>
         </section><!-- /game rules section-->
-        <section id="game-board" class="game-board-screen">
+
+        <section id="game-board" class="game-board-screen non-visible">
             <div class="game-board">
                 <!-- <div class="player-options">
                 <button id="walk-away-btn">Walk Away</button>
@@ -50,28 +52,28 @@
                 <div class="question-container">
                     <p class="question"></p>
                 </div>
-                <ul>
-                    <li><button id="a">A</button></li>
-                    <li><button id="b">B</button></li>
-                    <li><button id="c">C</button></li>
-                    <li><button id="d">D</button></li>
+                <ul class="buttons">
+                    <li><button id="a" class="option-btn"></button></li>
+                    <li><button id="b" class="option-btn"></button></li>
+                    <li><button id="c" class="option-btn"></button></li>
+                    <li><button id="d" class="option-btn"></button></li>
                 </ul>
             </div>
 
             <div class="score-container">
                 <p class="player-name">Stevens</p>
                 <div class="money-prize">
-                    <ul>
+                    <ul class="prizes-list">
                         <li class="money-1 active-prize">$100</li>
                         <li class="money-2">$200</li>
                         <li class="money-3">$300</li>
                         <li class="money-4">$500</li>
-                        <li class="money-5 first-threshold">$1,000</li>
+                        <li class="money-5 threshold">$1,000</li>
                         <li class="money-6">$2,000</li>
                         <li class="money-7">$4,000</li>
                         <li class="money-8">$8,000</li>
                         <li class="money-9">$16,000</li>
-                        <li class="money-10 second-threshold">$32,000</li>
+                        <li class="money-10 threshold">$32,000</li>
                         <li class="money-11">$64,000</li>
                         <li class="money-12">$125,000</li>
                         <li class="money-13">$250,000</li>
@@ -82,10 +84,17 @@
                 </div>
             </div>
         </section><!-- /Game board-->
-        <div class="modal-screen" hidden>
+
+        <div class="modal-screen non-visible">
             <div class="pop-up-container">
                 <div class="message-container">
-                    <!-- Message Generated-->
+                    <p class="message">
+                        <!-- Message Generated-->
+                    </p>
+
+                    <div class="buttons-container">
+                        <!-- Generated options-->
+                    </div>
                 </div>
             </div>
         </div>

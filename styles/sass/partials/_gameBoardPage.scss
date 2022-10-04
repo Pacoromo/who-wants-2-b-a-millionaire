@@ -4,14 +4,18 @@
 .game-board-screen {
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column-reverse;
+    justify-content: center;
     align-items: center;
     opacity: 1;
-    pointer-events: none;
+    pointer-events: initial;
+    transition: all .3s;
+    p {
+        text-transform: capitalize;
+    }
     ul {
         list-style-type: none;
         padding: 0;
