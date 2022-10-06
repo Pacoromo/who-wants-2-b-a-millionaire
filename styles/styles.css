@@ -471,9 +471,9 @@ form .button.border:hover:before, form .button.border:hover:after {
   -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -488,6 +488,9 @@ form .button.border:hover:before, form .button.border:hover:after {
 .game-board-screen ul {
   list-style-type: none;
   padding: 0;
+}
+.game-board-screen .prize-list li:not(.active-prize) {
+  display: none;
 }
 
 .modal-screen {

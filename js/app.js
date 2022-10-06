@@ -158,26 +158,19 @@ app.printGameBoardInfo = () => {
   /* pending
   -play a background sound
   */
- // if current question is 5 or 10 
- //print prize method:
- //optional sound effect(Pending)
- //add that prize to the user's prize variable (Pending)
- //print the current prize element method
- 
- //then check if we are at question < 0
- // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
- 
- //Add the class .active-prize to the current li[index](style accordingly)
- 
- 
- app.currentQuestionNumber -= 1; // every question loaded
+  //print current prize method:
+  app.currentPrize();
   //start a timer for the first 5 questions
   app.timerDisplay = document.querySelector(".timer");
-  if (app.currentQuestionNumber > 10) {
-    app.setTimer();
+  if (app.currentQuestionNumber >= 10) {
+    app.setTimer(15);
+  } else if (app.currentQuestionNumber >= 5) {
+    app.setTimer(30);
   } else {
-    app.timerDisplay.textContent = "";
+    app.setTimer(45);
   }
+
+  app.currentQuestionNumber -= 1; // every question loaded
 
   //-print the question that we have obtained from The API
   const question = document.querySelector(".question");
@@ -185,8 +178,10 @@ app.printGameBoardInfo = () => {
   const buttons = document.querySelectorAll(".option-btn");
 
   /* pending
-  //-check if user wants to walk away
+  -check if user wants to walk away
 */
+
+  // check user selection
 
   app.answerOptions.forEach((answerOption, index) => {
     //-print the 4 possible answers as buttons
@@ -198,8 +193,8 @@ app.printGameBoardInfo = () => {
   */
       //stop timer
       clearInterval(app.timer);
+      //get user answer
       app.optionSelected = this.textContent;
-      console.log(app.optionSelected);
       //check answer
       app.checkAnswerResults();
     });
@@ -208,8 +203,8 @@ app.printGameBoardInfo = () => {
 
 //Timer method
 
-app.setTimer = () => {
-  let timer = 15;
+app.setTimer = (seconds) => {
+  let timer = seconds;
   app.timerDisplay.textContent = timer; //display first value
 
   //start counting
@@ -223,6 +218,33 @@ app.setTimer = () => {
   }, 1000);
 }; //timer
 
+
+
+app.currentPrize = () => {
+  //print current prize method:
+  //get a list of all prizes
+  const prizes = document.querySelectorAll(".prize-list li");
+  //Add the class .active-prize to the current li[index](style accordingly)
+  const currentPrizeLi = prizes[app.currentQuestionNumber];
+  //print the current prize element method
+  currentPrizeLi.classList.add("active-prize");
+  // if current question is 5 or 10    
+  //optional sound effect(Pending)
+  app.playerPrize = currentPrizeLi.textContent;
+  console.log(app.correctAnswer);
+  
+  if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
+    //add that prize to the user's prize variable
+    app.playerPrize = currentPrizeLi.textContent;
+  } 
+  
+  //then check if we are at question < 0
+  // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
+  
+}
+
+
+
 //check answers method
 
 app.checkAnswerResults = () => {
@@ -235,11 +257,11 @@ app.checkAnswerResults = () => {
       if wrong:
         showResults(sorry you go home with no money); Pending// print a message with the earned amount
 
-
-
-
     */
-  
+if(app.optionSelected === app.correctAnswer){
+  // console.log("Answer is correct");
+  app.loadQuestion();
+}
 
 
 };
@@ -298,23 +320,3 @@ app.init();
         If user won: show the results screen
     -if answer was wrong
         -Show the results screen */
-
-
-        // if (app.optionSelected === app.correctAnswer) {
-        //   //check if we are in a threshold prize
-        //   switch (app.currentQuestion) {
-        //     case 5:
-        //       app.currentThreshold = document.querySelector(".money-5");
-        //       //show the option to leave with app.currentPrice... Pending
-        //       break;
-        //     case 10:
-        //       app.currentThreshold = document.querySelector(".money-10");
-        //       //show the option to leave with app.currentPrice...Pending
-        //       break;
-        //     case 15:
-        //       // The user has won...Pending
-        //       default:
-            
-        //       break;
-        //   }
-        // }
