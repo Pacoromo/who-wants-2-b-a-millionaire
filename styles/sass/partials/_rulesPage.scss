@@ -12,7 +12,9 @@
     opacity: 1;
     pointer-events: initial;
     transition: all .3s;
-
+    ul {
+        margin: 1em 0;
+    }
     li {
         font-size: clamp(0.8rem, 0.7273rem + 0.4545vw, 1rem);
         line-height: 1.5;
