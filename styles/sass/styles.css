@@ -1,0 +1,420 @@
+html {
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+article, aside, footer, header, nav, section {
+  display: block;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+figcaption, figure, main {
+  display: block;
+}
+
+figure {
+  margin: 1em 40px;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+b, strong {
+  font-weight: inherit;
+}
+
+b, strong {
+  font-weight: bolder;
+}
+
+code, kbd, samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+dfn {
+  font-style: italic;
+}
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+audio, video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+img {
+  border-style: none;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button, input {
+  overflow: visible;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button, html [type=button], [type=reset], [type=submit] {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type=checkbox], [type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+details, menu {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+canvas {
+  display: inline-block;
+}
+
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.wrapper {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+@font-face {
+  font-family: "copperplate";
+  src: url(../assets/fonts/copperplate_gothic_bold_regular-webfont.woff2) format("woff2"), url(../assets/fonts/copperplate_gothic_bold_regular-webfont.woff) format("woff"), url(../assets/fonts/copperplate_gothic_bold_regular-webfont.ttf) format("truetype");
+}
+@font-face {
+  font-family: "franklin";
+  src: url(../assets/fonts/librefranklin-extrabold-webfont.woff2) format("woff2"), url(../assets/fonts/librefranklin-extrabold-webfont.woff) format("woff"), url(../assets/fonts/librefranklin-extrabold-webfont.ttf) format("truetype");
+}
+html {
+  font-size: 125%;
+}
+
+body {
+  font-family: "franklin", sans-serif;
+  color: #FFF;
+}
+
+h1,
+button {
+  font-family: "copperplate", sans-serif;
+}
+
+body {
+  background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+header .button {
+  position: relative;
+  display: block;
+  background: transparent;
+  width: 300px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-top: 60px;
+  box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  z-index: 2;
+  /* Button Border Style */
+  /* Button hover styles */
+}
+header .button:hover {
+  cursor: pointer;
+}
+header .button:before, header .button:after {
+  position: absolute;
+  content: "";
+  width: 300px;
+  left: 0px;
+  height: 37px;
+  z-index: -1;
+}
+header .button:before {
+  transform: perspective(15px) rotateX(3deg);
+}
+header .button:after {
+  top: 40px;
+  transform: perspective(15px) rotateX(-3deg);
+}
+header .button.border:before, header .button.border:after {
+  border: 4px solid #FFF;
+}
+header .button.border:before {
+  border-bottom: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+header .button.border:after {
+  border-top: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+header .button.border:hover:before, header .button.border:hover:after {
+  background-color: #DC9E3F;
+}
+
+h1 {
+  font-size: clamp(2rem, 0.9091rem + 5.4545vw, 5rem);
+  margin-top: 40vh;
+  text-align: center;
+}
+
+.rules-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.rules-screen li {
+  font-size: clamp(0.8rem, 0.7273rem + 0.4545vw, 1rem);
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
+  text-align: center;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form input[type=text] {
+  width: 235px;
+  margin-top: 0.4em;
+}
+form .button {
+  position: relative;
+  display: block;
+  background: transparent;
+  width: 250px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  font-size: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  z-index: 2;
+  /* Button Border Style */
+  /* Button hover styles */
+}
+form .button:hover {
+  cursor: pointer;
+}
+form .button:before, form .button:after {
+  position: absolute;
+  content: "";
+  width: 250px;
+  left: 0px;
+  height: 37px;
+  z-index: -1;
+}
+form .button:before {
+  transform: perspective(15px) rotateX(3deg);
+}
+form .button:after {
+  top: 40px;
+  transform: perspective(15px) rotateX(-3deg);
+}
+form .button.border:before, form .button.border:after {
+  border: 4px solid #FFF;
+}
+form .button.border:before {
+  border-bottom: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+form .button.border:after {
+  border-top: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+form .button.border:hover:before, form .button.border:hover:after {
+  background-color: #DC9E3F;
+}
+
+.game-board-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  opacity: 1;
+  pointer-events: none;
+}
+.game-board-screen ul {
+  list-style-type: none;
+  padding: 0;
+}/*# sourceMappingURL=styles.css.map */
