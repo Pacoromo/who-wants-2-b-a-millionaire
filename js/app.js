@@ -173,7 +173,7 @@ app.printGameBoardInfo = () => {
  app.currentQuestionNumber -= 1; // every question loaded
   //start a timer for the first 5 questions
   app.timerDisplay = document.querySelector(".timer");
-  if (app.currentQuestionNumber <= 5) {
+  if (app.currentQuestionNumber > 10) {
     app.setTimer();
   } else {
     app.timerDisplay.textContent = "";

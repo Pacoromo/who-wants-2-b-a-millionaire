@@ -1,7 +1,8 @@
 // @use "./partials/variables" as *;
 @use "./partials/setup";
 @use "./partials/typography";
-@use "./partials/body";
+@use "./partials/general-styles";
 @use "./partials/headerPage";
 @use "./partials/rulesPage";
-@use "./partials/gameBoardPage"
+@use "./partials/gameBoardPage";
+@use "./partials/modal-screen";
