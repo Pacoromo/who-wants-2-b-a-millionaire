@@ -197,7 +197,7 @@ app.printGameBoardInfo = () => {
       app.optionSelected = this.textContent;
       //check answer
       app.checkAnswerResults();
-    });
+    }, {once: true});
   });
 }; //print board
 
