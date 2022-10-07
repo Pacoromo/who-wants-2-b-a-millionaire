@@ -49,12 +49,12 @@ app.toggleScreen = (element) => {
 //Show start screen
 
 app.startScreen = () => {
+  app.header = document.querySelector("header");//namespace variable
   const enterBtn = document.getElementById("enter-btn");
   enterBtn.addEventListener(
     "click",
     () => {
-      const header = document.querySelector("header");
-      app.toggleScreen(header);
+      app.toggleScreen(app.header);
       //Call next screen
       app.rulesScreen();
     },
@@ -98,16 +98,17 @@ A third page with the game's board
 -a score section hightlighting the current price pool
 */
 app.gameBoardScreen = () => {
-  const gameBoardsection = document.querySelector(".game-board-screen");
   const playerNameDisplay = document.querySelector(".player-name");
+  app.gameBoardsection = document.querySelector(".game-board-screen");//namespace variable
   playerNameDisplay.textContent = app.playerName;
-  app.toggleScreen(gameBoardsection);
+  app.toggleScreen(app.gameBoardsection);
   app.loadQuestion();
 }; //show game board
 
 //Load questions method
 
 app.loadQuestion = () => {
+  //Starts Loader screen
   //requests information from the API
   //use the URL constructor to specify the parameters we wish to include in our API endpoint (AKA in the request we are making to the API)
   const url = new URL(app.apiURL);
@@ -143,6 +144,7 @@ app.loadQuestion = () => {
       app.breakDownInfo(jsonResponse.results[0]);
       // console.log(jsonResponse.results[0]);
       //Call a method to print information on the board
+      //Stop screen loader
       app.printGameBoardInfo();
     });
 }; //load questions
@@ -223,9 +225,10 @@ app.setTimer = (seconds) => {
   app.timer = setInterval(function () {
     timer -= 1; //Every Second
     app.timerDisplay.textContent = timer;
-    //4check timing
+    //check timing
     if (timer === 0) {
-      // showResults(message); Pending
+      clearInterval(app.timer);
+      app.showResults("You've failed. Please try again");
       document.querySelector("body").style.border = "2px solid green";
     }
   }, 1000);
@@ -283,7 +286,7 @@ app.checkAnswerResults = () => {
 
   if (app.optionSelected === app.correctAnswer) {
     if (app.currentQuestionNumber === 0) {
-      //showResults(message); Pending
+      app.showResults("Congratulations you're now a millionaire!!!");
       document.querySelector("body").style.border = "2px solid green";
     } else {
       app.currentQuestionNumber -= 1; // every question loaded
@@ -292,10 +295,10 @@ app.checkAnswerResults = () => {
     }
 
   } else {
-    app.showResults("Congratulations, You've become a millionaire!!!");
+    app.showResults("Please try again!");
     document.querySelector("body").style.border = "2px solid green";
   }
-};
+};//Check answer result method
 
 
 app.showResults = (message) => {
@@ -310,12 +313,17 @@ app.showResults = (message) => {
   const buttonsContainer = document.querySelector(".buttons-container");
   buttonsContainer.innerHTML = "";
   /*create 2 buttons */
+  
   const playAgainBtn = document.createElement("button");
-  playAgainBtn.textContent = "Play Again?";
   playAgainBtn.setAttribute("id", "play-again-btn")
+  playAgainBtn.textContent = "Play Again?";
+
   const restartBtn = document.createElement("button");
   restartBtn.setAttribute("id", "restart-btn")
   restartBtn.textContent = "Restart";
+
+  /* Put buttons inside container */
+  buttonsContainer.append(restartBtn, playAgainBtn);
 
   //  start a button listener for both
   const buttons = document.querySelectorAll(".buttons-container button");
@@ -323,19 +331,22 @@ app.showResults = (message) => {
   buttons.forEach(button => {
     button.addEventListener("click", function () {
 
-        if (this.id === "play-agin-btn"){
+        if (this.id === "play-again-btn"){
          // button "play again?"" (same player)
          // initialize game
-          app.currentQuestion = 14;
-          app.difficultyLevel = "easy;"
-          app.printGameBoardInfo();
+          app.currentQuestionNumber = 14;
+          app.difficultyLevel = "easy"
+          app.loadQuestion();
         }else {
           //button "restart"   (new player)
+          app.toggleScreen(app.header);
           app.startScreen();
+          app.toggleScreen(app.gameBoardsection);
         }
+    app.toggleScreen(modalScreen);
     })
   });
-}
+}//Show results method
 
 
 
