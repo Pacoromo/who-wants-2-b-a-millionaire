@@ -13,14 +13,17 @@
     opacity: 1;
     pointer-events: initial;
     transition: all .3s;
-    p {
-        text-transform: capitalize;
-    }
+
     ul {
         list-style-type: none;
         padding: 0;
     }
-    .prize-list li:not(.active-prize){
+
+    .prize-list li:not(.active-prize) {
         display: none;
+    }
+
+    p {
+        text-transform: capitalize;
     }
 }

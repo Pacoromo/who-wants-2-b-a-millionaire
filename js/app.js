@@ -80,6 +80,7 @@ app.rulesScreen = () => {
       e.preventDefault();
       app.playerName = document.getElementById("player-name").value; //namespace scope
       app.currentQuestionNumber = 14; //initialize game
+      app.difficultyLevel = "easy";
       app.toggleScreen(rulesSection);
       //Call next screen
       app.gameBoardScreen();
@@ -115,6 +116,7 @@ app.loadQuestion = () => {
     token: app.token,
     amount: 1,
     type: "multiple",
+    difficulty: app.difficultyLevel,
   });
   // Use the fetch API to make a request to the open trivia API endpoint
   // pass in new URL featuring params provided by the URLSearchParams constructor
@@ -188,12 +190,13 @@ app.printGameBoardInfo = () => {
   if (app.currentQuestionNumber >= 10) {
     app.setTimer(15);
   } else if (app.currentQuestionNumber >= 5) {
+    app.difficultyLevel = "medium";
     app.setTimer(30);
   } else {
+    app.difficultyLevel = "hard";
     app.setTimer(45);
   }
-  app.currentQuestionNumber -= 1; // every question loaded
-
+  console.log(app.difficultyLevel);
   //-print the question that we have obtained from The API
   const question = document.querySelector(".question");
   question.innerHTML = app.currentQuestion;
@@ -282,31 +285,67 @@ app.checkAnswerResults = () => {
     if (app.currentQuestionNumber === 0) {
       //showResults(message); Pending
       document.querySelector("body").style.border = "2px solid green";
+    } else {
+      app.currentQuestionNumber -= 1; // every question loaded
+      // console.log("Answer is correct");
+      app.loadQuestion();
     }
-    // console.log("Answer is correct");
-    app.loadQuestion();
+
   } else {
-    //showResults(message); Pending
+    app.showResults("Congratulations, You've become a millionaire!!!");
     document.querySelector("body").style.border = "2px solid green";
   }
 };
 
-/*
 
-if yes: check the next lowest threshold
-Print the results
--make a function to compare selection
--play a sound when user makes a selection
--if no selection is made and the timer runs out the -answer is considered as wrong
--play a sound when answer is wrong or timer runs out
--play a sound when answer is right
+app.showResults = (message) => {
 
--If answer was right:
-    -increase the score
-    -Check if user won
-    If user won: show the results screen
--if answer was wrong
-    -Show the results screen */
+  //show modal screen
+  const modalScreen = document.querySelector(".modal-screen");
+  app.toggleScreen(modalScreen);
+  //print message
+  const modalMessage = document.querySelector(".message");
+  modalMessage.innerHTML = "";
+  modalMessage.textContent = message;
+  const buttonsContainer = document.querySelector(".buttons-container");
+  buttonsContainer.innerHTML = "";
+  /*create 2 buttons */
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play Again?";
+  playAgainBtn.setAttribute("id", "play-again-btn")
+  const restartBtn = document.createElement("button");
+  restartBtn.setAttribute("id", "restart-btn")
+  restartBtn.textContent = "Restart";
+
+  //  start a button listener for both
+  const buttons = document.querySelectorAll(".buttons-container button");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function () {
+
+        if (this.id === "play-agin-btn"){
+         // button "play again?"" (same player)
+         // initialize game
+          app.currentQuestion = 14;
+          app.difficultyLevel = "easy;"
+          app.printGameBoardInfo();
+        }else {
+          //button "restart"   (new player)
+          app.startScreen();
+        }
+    })
+  });
+}
+
+
+
+
+
+
+
+
+
+
 
 //App Init
 app.init = () => {
