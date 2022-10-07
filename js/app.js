@@ -22,17 +22,18 @@ app.getToken = () => {
 app.optionListeners = () => {
   const buttons = document.querySelectorAll(".option-btn");
 
-  buttons.forEach((button) => {
+  buttons.forEach((button, index) => {
     button.addEventListener("click", function () {
       /* pending
   -play a background sound
-  */
-      //stop timer
+  */  //stop timer
       clearInterval(app.timer);
       //get user answer
-      app.optionSelected = this.textContent;
+      app.optionSelected = app.answerOptions[index];
       //check answer
       app.checkAnswerResults();
+      // }
+
     });
   });
 }
@@ -191,7 +192,6 @@ app.printGameBoardInfo = () => {
   } else {
     app.setTimer(45);
   }
-
   app.currentQuestionNumber -= 1; // every question loaded
 
   //-print the question that we have obtained from The API
@@ -204,18 +204,17 @@ app.printGameBoardInfo = () => {
 */
 
   // check user selection
-
   app.answerOptions.forEach((answerOption, index) => {
     //-print the 4 possible answers as buttons
     buttons[index].innerHTML = answerOption;
   });
-}; //print board
+}; //print board method
 
 //Timer method
 
 app.setTimer = (seconds) => {
   let timer = seconds;
-  app.timerDisplay.textContent = timer; //display first value
+  app.timerDisplay.textContent = timer; //display value
 
   //start counting
   app.timer = setInterval(function () {
@@ -224,9 +223,10 @@ app.setTimer = (seconds) => {
     //4check timing
     if (timer === 0) {
       // showResults(message); Pending
+      document.querySelector("body").style.border = "2px solid green";
     }
   }, 1000);
-}; //timer
+}; //timer method
 
 
 
@@ -234,17 +234,24 @@ app.currentPrize = () => {
   //print current prize method:
   //get a list of all prizes
   const prizes = document.querySelectorAll(".prize-list li");
+  //remove the class "active-prize" from all Li's inside the prize list container
+  prizes.forEach(element => {
+    element.classList.remove("active-prize");
+  });
+
   //Add the class .active-prize to the current li[index](style accordingly)
   const currentPrizeLi = prizes[app.currentQuestionNumber];
   //print the current prize element method
   currentPrizeLi.classList.add("active-prize");
 
-  // if current question is 5 or 10    
-  //optional sound effect(Pending)
+  //Add prize amount to player's score
   app.playerPrize = currentPrizeLi.textContent;
   console.log(app.correctAnswer);
 
-  if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
+  // if current question is 5 or 10    
+  //optional sound effect(Pending)
+
+  if (app.currentQuestionNumber === 6 || app.currentQuestionNumber === 10) {
     //add that prize to the user's prize variable
     app.playerPrize = currentPrizeLi.textContent;
   }
@@ -252,7 +259,7 @@ app.currentPrize = () => {
   //then check if we are at question < 0
   // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
 
-}
+}// Current prize method
 
 
 
@@ -269,12 +276,19 @@ app.checkAnswerResults = () => {
         showResults(sorry you go home with no money); Pending// print a message with the earned amount
 
     */
+
+
   if (app.optionSelected === app.correctAnswer) {
+    if (app.currentQuestionNumber === 0) {
+      //showResults(message); Pending
+      document.querySelector("body").style.border = "2px solid green";
+    }
     // console.log("Answer is correct");
     app.loadQuestion();
+  } else {
+    //showResults(message); Pending
+    document.querySelector("body").style.border = "2px solid green";
   }
-
-
 };
 
 /*
