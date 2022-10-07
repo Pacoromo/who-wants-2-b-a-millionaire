@@ -17,6 +17,28 @@ app.getToken = () => {
     });
 };
 
+//options listeners 
+
+app.optionListeners = () => {
+  const buttons = document.querySelectorAll(".option-btn");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      /* pending
+  -play a background sound
+  */
+      //stop timer
+      clearInterval(app.timer);
+      //get user answer
+      app.optionSelected = this.textContent;
+      //check answer
+      app.checkAnswerResults();
+    });
+  });
+}
+
+
+
 //Screen display toggle
 
 app.toggleScreen = (element) => {
@@ -186,18 +208,6 @@ app.printGameBoardInfo = () => {
   app.answerOptions.forEach((answerOption, index) => {
     //-print the 4 possible answers as buttons
     buttons[index].innerHTML = answerOption;
-    //-start listening for the user answer
-    buttons[index].addEventListener("click", function () {
-      /* pending
-  -play a background sound
-  */
-      //stop timer
-      clearInterval(app.timer);
-      //get user answer
-      app.optionSelected = this.textContent;
-      //check answer
-      app.checkAnswerResults();
-    }, {once: true});
   });
 }; //print board
 
@@ -228,19 +238,20 @@ app.currentPrize = () => {
   const currentPrizeLi = prizes[app.currentQuestionNumber];
   //print the current prize element method
   currentPrizeLi.classList.add("active-prize");
+
   // if current question is 5 or 10    
   //optional sound effect(Pending)
   app.playerPrize = currentPrizeLi.textContent;
   console.log(app.correctAnswer);
-  
+
   if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
     //add that prize to the user's prize variable
     app.playerPrize = currentPrizeLi.textContent;
-  } 
-  
+  }
+
   //then check if we are at question < 0
   // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
-  
+
 }
 
 
@@ -258,10 +269,10 @@ app.checkAnswerResults = () => {
         showResults(sorry you go home with no money); Pending// print a message with the earned amount
 
     */
-if(app.optionSelected === app.correctAnswer){
-  // console.log("Answer is correct");
-  app.loadQuestion();
-}
+  if (app.optionSelected === app.correctAnswer) {
+    // console.log("Answer is correct");
+    app.loadQuestion();
+  }
 
 
 };
@@ -287,6 +298,7 @@ Print the results
 app.init = () => {
   app.startScreen();
   app.getToken();
+  app.optionListeners();
 };
 
 app.init();
