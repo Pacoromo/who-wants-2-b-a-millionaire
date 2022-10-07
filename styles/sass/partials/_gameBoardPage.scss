@@ -27,3 +27,11 @@
         text-transform: capitalize;
     }
 }
+
+@media (min-width: 996px) {
+    .game-board-screen {
+        .prizes-container .prize-list li {
+            display: block;
+        }
+    }
+}
