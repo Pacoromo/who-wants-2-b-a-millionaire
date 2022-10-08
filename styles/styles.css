@@ -520,7 +520,6 @@ form .button.border:hover:before, form .button.border:hover:after {
       -ms-flex-align: center;
           align-items: center;
   opacity: 1;
-  background-color: steelblue;
   pointer-events: initial;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -550,6 +549,9 @@ form .button.border:hover:before, form .button.border:hover:after {
   pointer-events: initial;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+.loader-screen .loader-message {
+  font-size: 2rem;
 }
 .loader-screen .loader-container {
   position: relative;

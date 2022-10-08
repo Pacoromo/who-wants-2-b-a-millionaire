@@ -3,6 +3,13 @@ const app = {};
 app.apiURL = "https://opentdb.com/api.php";
 app.sessionTokenUrl = "https://opentdb.com/api_token.php?command=request"; //API token URL (Necessary to avoid repeating questions in a session)
 
+//audio files
+
+app.mainThemeAudio = new Audio("../assets/sounds/main-theme.mp3");
+app.letsPlayAudio = new Audio("../assets/sounds/lets-play.mp3");
+app.correctAnswerAudio = new Audio("../assets/sounds/correct-answer.mp3");
+app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
+
 //*************************************************/
 //******************Functions*********************//
 //*************************************************/
@@ -53,6 +60,7 @@ app.startScreen = () => {
   enterBtn.addEventListener(
     "click",
     () => {
+      app.mainThemeAudio.play();
       app.toggleScreen(header);
       //Call next screen
       app.rulesScreen();
@@ -72,11 +80,13 @@ app.rulesScreen = () => {
     "submit",
     (e) => {
       e.preventDefault();
+      app.mainThemeAudio.load();//stop/restart audio
       app.initializeGame();
       app.playerName = document.getElementById("player-name").value;
       app.toggleScreen(rulesSection);
-      //Call next screen
+      // Call next screen
       app.gameBoardScreen();
+      app.loadQuestion("Lets play!", app.letsPlayAudio);
     },
     { once: true }
   );
@@ -93,19 +103,25 @@ app.initializeGame = () => {
 //Show gameboard screen
 
 app.gameBoardScreen = () => {
+  app.gameBoardSection = document.querySelector(".game-board-screen");
+  app.toggleScreen(app.gameBoardSection);
   const playerNameDisplay = document.querySelector(".player-name");
   playerNameDisplay.textContent = app.playerName;
-  app.gameBoardsection = document.querySelector(".game-board-screen");
-  app.toggleScreen(app.gameBoardsection);
-  app.loadQuestion();
 }; //show game board screen method
 
 //Load questions method
 
-app.loadQuestion = () => {
-  const loaderScreen = document.querySelector(".loader-screen");
+app.loadQuestion = (message, audio) => {
+  //hide game board temporaily
+  app.toggleScreen(app.gameBoardSection);
   //start loader screen
+  const loaderScreen = document.querySelector(".loader-screen");
   app.toggleScreen(loaderScreen);
+  //display message inside loader screen
+  const loaderMessage = document.querySelector(".loader-message");
+  loaderMessage.textContent = message;
+  //play corresponding audio
+  audio.play();
   const url = new URL(app.apiURL);
   url.search = new URLSearchParams({
     token: app.token,
@@ -135,10 +151,15 @@ app.loadQuestion = () => {
       */
       //Call a method to break down information from the response object\
       app.breakDownInfo(jsonResponse.results[0]);
-      //Call a method to print information on the board
-      app.printGameBoardInfo();
-      //Stop screen loader
-      app.toggleScreen(loaderScreen);
+      //print information on the bboard and hide loader when audio has finished
+      audio.onended = () => {
+        //Call a method to print information on the board
+        app.printGameBoardInfo();
+        //Show game board
+        app.toggleScreen(app.gameBoardSection);
+        //Hide loader
+        app.toggleScreen(loaderScreen);
+      }
     });
 }; //load questions method
 
@@ -173,9 +194,6 @@ app.shuffleAnswers = (array) => {
 //print board method
 
 app.printGameBoardInfo = () => {
-  /* pending
-  -play a background sound
-  */
   //print current prize method:
   app.currentPrize();
   //start timer
@@ -252,11 +270,11 @@ app.checkAnswerResults = () => {
       //add that prize to the user's prize variable, play a special sound and screen(pending)
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion();
+      app.loadQuestion(`Congratulations, you've just won ${app.playerPrize}`,);
     } else {
       //play a sound of correct answer (pending)
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion();
+      app.loadQuestion("You are correct", app.correctAnswerAudio);
     }
   } else {
     //play a sound of wrong answer (pending)
@@ -271,9 +289,11 @@ app.checkAnswerResults = () => {
 };//Check answer result method
 
 
-app.showResults = (message) => {
+app.showResults = (message, sound) => {
   //Stop timer when game is over
   clearInterval(app.timer);
+  //hide game board
+  app.toggleScreen(app.gameBoardSection)
   //show modal screen
   const modalScreen = document.querySelector(".modal-screen");
   app.toggleScreen(modalScreen);
@@ -302,10 +322,10 @@ app.showResults = (message) => {
     button.addEventListener("click", function () {
       if (this.id === "play-again-btn") {
         app.initializeGame();
-        app.loadQuestion();
+        app.gameBoardScreen();
+        app.loadQuestion("Lets play again!", app.letsPlayAudio);
       } else {
         //"restart" button
-        app.toggleScreen(app.gameBoardsection);//hide gameboard screen
         app.startScreen();//call start screen
       }
       app.toggleScreen(modalScreen);//Hide modal screen
