@@ -546,19 +546,32 @@ form .button.border:hover:before, form .button.border:hover:after {
       -ms-flex-align: center;
           align-items: center;
   opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
   pointer-events: initial;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.loader-screen .loader {
-  border: 16px solid #f3f3f3;
-  /* Light grey */
-  border-top: 16px solid #DC9E3F;
-  border-radius: 50%;
+.loader-screen .loader-container {
+  position: relative;
   width: 120px;
   height: 120px;
+}
+.loader-screen .loader-border,
+.loader-screen .loader-image {
+  position: absolute;
+}
+.loader-screen .loader-border {
+  z-index: 1;
+  inset: 0;
+  border: 16px solid #6D7AC3;
+  border-top: 16px solid #DC9E3F;
+  border-radius: 50%;
   -webkit-animation: spin 2s linear infinite;
           animation: spin 2s linear infinite;
+}
+.loader-screen .loader-image {
+  inset: 12px;
+  background: url(../assets/images/loader-animation.gif) center/cover no-repeat;
 }
 
 @-webkit-keyframes spin {
