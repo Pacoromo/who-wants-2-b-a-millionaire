@@ -2,7 +2,6 @@ const app = {};
 
 app.apiURL = "https://opentdb.com/api.php";
 app.sessionTokenUrl = "https://opentdb.com/api_token.php?command=request"; //API token URL (Necessary to avoid repeating questions in a session)
-app.playerPrize = "";
 
 //*************************************************/
 //******************Functions*********************//
@@ -27,9 +26,9 @@ app.optionListeners = () => {
     button.addEventListener("click", function () {
       /* pending
   -play a background sound
-  */  //stop timer
+  */  //stop timer whenever an option is selected
       clearInterval(app.timer);
-      //get user answer
+      //get user selection
       app.optionSelected = app.answerOptions[index];
       //check answer
       app.checkAnswerResults();
@@ -48,7 +47,7 @@ app.toggleScreen = (element) => {
 //Show start screen
 
 app.startScreen = () => {
-  const header = document.querySelector("header");//namespace variable
+  const header = document.querySelector("header");
   app.toggleScreen(header);
   const enterBtn = document.getElementById("enter-btn");
   enterBtn.addEventListener(
@@ -85,11 +84,10 @@ app.rulesScreen = () => {
 
 //Initialize game 
 
-app.initializeGame = () =>{
-   //initialize game
-   app.playerPrize = "";
-   app.currentQuestionNumber = 14;
-   app.difficultyLevel = "easy";
+app.initializeGame = () => {
+  app.playerPrize = "";
+  app.currentQuestionNumber = 14;
+  app.difficultyLevel = "easy";
 }
 
 //Show gameboard screen
@@ -97,7 +95,7 @@ app.initializeGame = () =>{
 app.gameBoardScreen = () => {
   const playerNameDisplay = document.querySelector(".player-name");
   playerNameDisplay.textContent = app.playerName;
-  app.gameBoardsection = document.querySelector(".game-board-screen");//namespace variable
+  app.gameBoardsection = document.querySelector(".game-board-screen");
   app.toggleScreen(app.gameBoardsection);
   app.loadQuestion();
 }; //show game board screen method
@@ -105,19 +103,17 @@ app.gameBoardScreen = () => {
 //Load questions method
 
 app.loadQuestion = () => {
-  //Starts Loader screen
-  //requests information from the API
-  //use the URL constructor to specify the parameters we wish to include in our API endpoint (AKA in the request we are making to the API)
+  const loaderScreen = document.querySelector(".loader-screen");
+  //start loader screen
+  app.toggleScreen(loaderScreen);
   const url = new URL(app.apiURL);
   url.search = new URLSearchParams({
-    // pass in our seession token as a parameter
     token: app.token,
     amount: 1,
     type: "multiple",
     difficulty: app.difficultyLevel,
   });
   // Use the fetch API to make a request to the open trivia API endpoint
-  // pass in new URL featuring params provided by the URLSearchParams constructor
   fetch(url)
     .then((response) => response.json())
     .then((jsonResponse) => {
@@ -139,10 +135,10 @@ app.loadQuestion = () => {
       */
       //Call a method to break down information from the response object\
       app.breakDownInfo(jsonResponse.results[0]);
-      // console.log(jsonResponse.results[0]);
       //Call a method to print information on the board
-      //Stop screen loader
       app.printGameBoardInfo();
+      //Stop screen loader
+      app.toggleScreen(loaderScreen);
     });
 }; //load questions method
 
@@ -182,16 +178,16 @@ app.printGameBoardInfo = () => {
   */
   //print current prize method:
   app.currentPrize();
-  //start a timer for the first 5 questions
+  //start timer
   app.timerDisplay = document.querySelector(".timer");
   if (app.currentQuestionNumber >= 10) {
-    app.setTimer(15);
+    app.setTimer(15);//first 5 question
   } else if (app.currentQuestionNumber >= 5) {
     app.difficultyLevel = "medium";
-    app.setTimer(30);
+    app.setTimer(30);//question 6 - 10
   } else {
     app.difficultyLevel = "hard";
-    app.setTimer(45);
+    app.setTimer(45);//questions 11 -15
   }
   //print the question that we have obtained from The API
   const question = document.querySelector(".question");
@@ -221,7 +217,6 @@ app.setTimer = (seconds) => {
     //check timing
     if (timer === 0) {
       app.showResults("You've failed. Please try again");
-      document.querySelector("body").style.border = "2px solid green";
     }
   }, 1000);
 }; //timer method
@@ -235,20 +230,11 @@ app.currentPrize = () => {
   prizes.forEach(element => {
     element.classList.remove("active-prize");
   });
-
   //Add the class .active-prize to the current li[index](style accordingly)
-  const currentPrizeLi = prizes[app.currentQuestionNumber];
-
+  app.activePrize = prizes[app.currentQuestionNumber];
   //print the current prize element
-  currentPrizeLi.classList.add("active-prize");
+  app.activePrize.classList.add("active-prize");
   console.log(app.correctAnswer);
-
-  // if current question is 5 or 10    
-  //optional sound effect(Pending)
-  if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
-    //add that prize to the user's prize variable
-    app.playerPrize = currentPrizeLi.textContent;
-  }
 }// Current prize method
 
 
@@ -258,14 +244,18 @@ app.currentPrize = () => {
 app.checkAnswerResults = () => {
   // check if answer is R/W
   if (app.optionSelected === app.correctAnswer) {
-    //then check if we are working on the last question
+    //check if we are working on the last question
     if (app.currentQuestionNumber === 0) {
       app.showResults("Congratulations you're now a millionaire!!!");
-      document.querySelector("body").style.border = "2px solid green";
+      //check if current question is 5 or 10 (money threshold)
+    } else if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
+      //add that prize to the user's prize variable, play a special sound and screen(pending)
+      app.playerPrize = app.activePrize.textContent;
+      app.currentQuestionNumber -= 1; //go for next question
+      app.loadQuestion();
     } else {
       //play a sound of correct answer (pending)
-      //* Check why is showing the past prize li*/
-      app.currentQuestionNumber -= 1; // every question loaded
+      app.currentQuestionNumber -= 1; //go for next question
       app.loadQuestion();
     }
   } else {
@@ -276,9 +266,7 @@ app.checkAnswerResults = () => {
     } else {
       message = "Please try again!"
     }
-
     app.showResults(message);
-    document.querySelector("body").style.border = "2px solid green";
   }
 };//Check answer result method
 
@@ -302,7 +290,6 @@ app.showResults = (message) => {
   playAgainBtn.textContent = "Play Again?";
 
   const restartBtn = document.createElement("button");
-  restartBtn.setAttribute("id", "restart-btn")
   restartBtn.textContent = "Restart";
 
   /* Put buttons inside container */
@@ -317,24 +304,14 @@ app.showResults = (message) => {
         app.initializeGame();
         app.loadQuestion();
       } else {
-        //button "restart"
+        //"restart" button
         app.toggleScreen(app.gameBoardsection);//hide gameboard screen
         app.startScreen();//call start screen
       }
-      app.toggleScreen(modalScreen);
+      app.toggleScreen(modalScreen);//Hide modal screen
     })
   });
 }//Show results method
-
-
-
-
-
-
-
-
-
-
 
 //App Init
 app.init = () => {
@@ -344,33 +321,3 @@ app.init = () => {
 };
 
 app.init();
-
-/*
-
-
- A third page with the game's board
-    -a section showing the current question
-    -a section with 4 buttons with every option
-    -a score section hightlighting the current price pool
-
--print the question that we have obtained from The API
--print the 4 possible answers as buttons
--start listening for the user answer
--start the timer
--play a background sound
-
--check if user wants to walk away
-    if yes: check the next lowest threshold
-    print the results
-
--make a function to compare selection
--play a sound when user makes a selection
--if no selection is made and the timer runs out the -answer is considered as wrong
--play a sound when answer is wrong or timer runs out
--play a sound when answer is right
-
-    -If answer was right:
-        -Check if user won
-        If user won: show the results screen
-    -if answer was wrong
-        -Show the results screen */
