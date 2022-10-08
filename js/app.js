@@ -73,8 +73,7 @@ app.rulesScreen = () => {
     "submit",
     (e) => {
       e.preventDefault();
-      app.currentQuestionNumber = 14; //initialize game
-      app.difficultyLevel = "easy";
+      app.initializeGame();
       app.playerName = document.getElementById("player-name").value;
       app.toggleScreen(rulesSection);
       //Call next screen
@@ -83,6 +82,15 @@ app.rulesScreen = () => {
     { once: true }
   );
 }; //show rules screen method
+
+//Initialize game 
+
+app.initializeGame = () =>{
+   //initialize game
+   app.playerPrize = "";
+   app.currentQuestionNumber = 14;
+   app.difficultyLevel = "easy";
+}
 
 //Show gameboard screen
 
@@ -306,10 +314,7 @@ app.showResults = (message) => {
   buttons.forEach(button => {
     button.addEventListener("click", function () {
       if (this.id === "play-again-btn") {
-        // initialize game
-        app.playerPrize = "";
-        app.currentQuestionNumber = 14;
-        app.difficultyLevel = "easy"
+        app.initializeGame();
         app.loadQuestion();
       } else {
         //button "restart"
