@@ -9,6 +9,20 @@ app.mainThemeAudio = new Audio("../assets/sounds/main-theme.mp3");
 app.letsPlayAudio = new Audio("../assets/sounds/lets-play.mp3");
 app.correctAnswerAudio = new Audio("../assets/sounds/correct-answer.mp3");
 app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
+app.thresholdAudio = new Audio("../assets/sounds/commercial-break.mp3");
+app.question14to9Audio = new Audio("../assets/sounds/100-1000-music.mp3");
+app.question9to5Audio = new Audio("../assets/sounds/2000-32000-music.mp3");
+app.question4Audio = new Audio("../assets/sounds/64000-music.mp3");
+app.question3and2Audio = new Audio("../assets/sounds/125000-25000-music.mp3");
+app.question1Audio = new Audio("../assets/sounds/500000-music.mp3");
+app.question0Audio = new Audio("../assets/sounds/1000000-music.mp3");
+document.body.appendChild(app.question14to9Audio); // to access them through the DOM
+document.body.appendChild(app.question9to5Audio);
+document.body.appendChild(app.question4Audio);
+document.body.appendChild(app.question3and2Audio);
+document.body.appendChild(app.question1Audio);
+document.body.appendChild(app.question0Audio);
+
 
 //*************************************************/
 //******************Functions*********************//
@@ -80,7 +94,7 @@ app.rulesScreen = () => {
     "submit",
     (e) => {
       e.preventDefault();
-      app.mainThemeAudio.load();//stop/restart audio
+      app.mainThemeAudio.load();//stop and reload audio when leaving page
       app.initializeGame();
       app.playerName = document.getElementById("player-name").value;
       app.toggleScreen(rulesSection);
@@ -120,6 +134,8 @@ app.loadQuestion = (message, audio) => {
   //display message inside loader screen
   const loaderMessage = document.querySelector(".loader-message");
   loaderMessage.textContent = message;
+  //stop any question audio background playing at the moment
+  app.stopQuestionsBackgroundAudio();
   //play corresponding audio
   audio.play();
   const url = new URL(app.apiURL);
@@ -151,17 +167,48 @@ app.loadQuestion = (message, audio) => {
       */
       //Call a method to break down information from the response object\
       app.breakDownInfo(jsonResponse.results[0]);
-      //print information on the bboard and hide loader when audio has finished
+      //print information on the board and hide loader when audio has finished
       audio.onended = () => {
         //Call a method to print information on the board
         app.printGameBoardInfo();
-        //Show game board
+        //Show game board after the board has been populated
         app.toggleScreen(app.gameBoardSection);
-        //Hide loader
+        //Hide loader screen
         app.toggleScreen(loaderScreen);
+        // Play audio according to question number
+        app.playQuestionsAudio();
       }
     });
 }; //load questions method
+
+//Stop Questions audio
+
+app.stopQuestionsBackgroundAudio = () => {
+  const allAudioFiles = document.querySelectorAll("audio");
+  console.log(allAudioFiles);
+  allAudioFiles.forEach(audioFile => {
+    audioFile.load();
+  });
+};// Stop Audio Method
+
+//Play Questions Audio accordingly
+
+app.playQuestionsAudio = () => {
+  if (app.currentQuestionNumber >= 10) {
+    app.question14to9Audio.play();
+  } else if (app.currentQuestionNumber >= 5) {
+    app.question9to5Audio.play();
+  } else if (app.currentQuestionNumber === 4) {
+    app.question4Audio.play();
+  } else if (app.currentQuestionNumber === 3 || app.currentQuestionNumber === 2) {
+    app.question3and2Audio.play();
+  } else if (app.currentQuestionNumber === 1) {
+    app.question1Audio.play();
+  } else {
+    app.question0Audio.play();
+  }
+};
+
 
 //break down info method
 
@@ -270,7 +317,7 @@ app.checkAnswerResults = () => {
       //add that prize to the user's prize variable, play a special sound and screen(pending)
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion(`Congratulations, you've just won ${app.playerPrize}`,);
+      app.loadQuestion(`Congratulations, you've just won ${app.playerPrize}`, app.thresholdAudio);
     } else {
       //play a sound of correct answer (pending)
       app.currentQuestionNumber -= 1; //go for next question
@@ -292,6 +339,8 @@ app.checkAnswerResults = () => {
 app.showResults = (message, sound) => {
   //Stop timer when game is over
   clearInterval(app.timer);
+  //stop sounds from questions board
+  app.stopQuestionsBackgroundAudio();
   //hide game board
   app.toggleScreen(app.gameBoardSection)
   //show modal screen
