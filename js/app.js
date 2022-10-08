@@ -2,6 +2,7 @@ const app = {};
 
 app.apiURL = "https://opentdb.com/api.php";
 app.sessionTokenUrl = "https://opentdb.com/api_token.php?command=request"; //API token URL (Necessary to avoid repeating questions in a session)
+app.playerPrize = "";
 
 //*************************************************/
 //******************Functions*********************//
@@ -38,8 +39,6 @@ app.optionListeners = () => {
   });
 }
 
-
-
 //Screen display toggle
 
 app.toggleScreen = (element) => {
@@ -49,61 +48,51 @@ app.toggleScreen = (element) => {
 //Show start screen
 
 app.startScreen = () => {
-  app.header = document.querySelector("header");//namespace variable
+  const header = document.querySelector("header");//namespace variable
+  app.toggleScreen(header);
   const enterBtn = document.getElementById("enter-btn");
   enterBtn.addEventListener(
     "click",
     () => {
-      app.toggleScreen(app.header);
+      app.toggleScreen(header);
       //Call next screen
       app.rulesScreen();
     },
     { once: true }
   );
-}; //show start
+}; //show start screen method
 
 //Show rules screen
-/*  
-A second page:
-    -Game rules description
-    -Ask for the player's name with a text input
-    -A start button*/
 
 app.rulesScreen = () => {
   const rulesSection = document.querySelector(".rules-screen");
-  const form = document.querySelector(".rules-screen form");
   app.toggleScreen(rulesSection);
+  const form = document.querySelector(".rules-screen form");
   form.reset();
   form.addEventListener(
     "submit",
     (e) => {
       e.preventDefault();
-      app.playerName = document.getElementById("player-name").value; //namespace scope
       app.currentQuestionNumber = 14; //initialize game
       app.difficultyLevel = "easy";
+      app.playerName = document.getElementById("player-name").value;
       app.toggleScreen(rulesSection);
       //Call next screen
       app.gameBoardScreen();
     },
     { once: true }
   );
-}; //show rules
+}; //show rules screen method
 
 //Show gameboard screen
 
-/*
-A third page with the game's board
--a section showing the current question and player's name
--a section with 4 buttons with every option
--a score section hightlighting the current price pool
-*/
 app.gameBoardScreen = () => {
   const playerNameDisplay = document.querySelector(".player-name");
-  app.gameBoardsection = document.querySelector(".game-board-screen");//namespace variable
   playerNameDisplay.textContent = app.playerName;
+  app.gameBoardsection = document.querySelector(".game-board-screen");//namespace variable
   app.toggleScreen(app.gameBoardsection);
   app.loadQuestion();
-}; //show game board
+}; //show game board screen method
 
 //Load questions method
 
@@ -147,19 +136,17 @@ app.loadQuestion = () => {
       //Stop screen loader
       app.printGameBoardInfo();
     });
-}; //load questions
+}; //load questions method
 
 //break down info method
 
 app.breakDownInfo = (questionInfo) => {
   app.currentQuestion = questionInfo.question;
   app.correctAnswer = questionInfo.correct_answer;
-  // console.log(app.correctAnswer);
   const wrongAnswers = questionInfo.incorrect_answers; // the Api gives us 3 wrong answers
   wrongAnswers.push(app.correctAnswer); // make an array with all posible answers
   app.answerOptions = app.shuffleAnswers(wrongAnswers); // shuffle the array and store it
-  // console.log(app.answerOptions);
-}; //break down info
+}; //break down info method
 
 //Shuffle answers method https://bost.ocks.org/mike/shuffle/
 
@@ -177,7 +164,7 @@ app.shuffleAnswers = (array) => {
     array[i] = t;
   }
   return array;
-}; //Shuffle array
+}; //Shuffle array method
 
 //print board method
 
@@ -198,8 +185,7 @@ app.printGameBoardInfo = () => {
     app.difficultyLevel = "hard";
     app.setTimer(45);
   }
-  console.log(app.difficultyLevel);
-  //-print the question that we have obtained from The API
+  //print the question that we have obtained from The API
   const question = document.querySelector(".question");
   question.innerHTML = app.currentQuestion;
   const buttons = document.querySelectorAll(".option-btn");
@@ -220,24 +206,21 @@ app.printGameBoardInfo = () => {
 app.setTimer = (seconds) => {
   let timer = seconds;
   app.timerDisplay.textContent = timer; //display value
-
   //start counting
   app.timer = setInterval(function () {
     timer -= 1; //Every Second
     app.timerDisplay.textContent = timer;
     //check timing
     if (timer === 0) {
-      clearInterval(app.timer);
       app.showResults("You've failed. Please try again");
       document.querySelector("body").style.border = "2px solid green";
     }
   }, 1000);
 }; //timer method
 
-
+//print current prize method:
 
 app.currentPrize = () => {
-  //print current prize method:
   //get a list of all prizes
   const prizes = document.querySelectorAll(".prize-list li");
   //remove the class "active-prize" from all Li's inside the prize list container
@@ -247,24 +230,17 @@ app.currentPrize = () => {
 
   //Add the class .active-prize to the current li[index](style accordingly)
   const currentPrizeLi = prizes[app.currentQuestionNumber];
-  //print the current prize element method
-  currentPrizeLi.classList.add("active-prize");
 
-  //Add prize amount to player's score
-  app.playerPrize = currentPrizeLi.textContent;
+  //print the current prize element
+  currentPrizeLi.classList.add("active-prize");
   console.log(app.correctAnswer);
 
   // if current question is 5 or 10    
   //optional sound effect(Pending)
-
-  if (app.currentQuestionNumber === 6 || app.currentQuestionNumber === 10) {
+  if (app.currentQuestionNumber === 5 || app.currentQuestionNumber === 10) {
     //add that prize to the user's prize variable
     app.playerPrize = currentPrizeLi.textContent;
   }
-
-  //then check if we are at question < 0
-  // showResults(congratulations you 've won a million dollars); with $1,000,000 Pending
-
 }// Current prize method
 
 
@@ -272,37 +248,36 @@ app.currentPrize = () => {
 //check answers method
 
 app.checkAnswerResults = () => {
-  /* check if answer is R/W
-
-      if correct:
-        play a sound of correct answer
-        we call for next question app.loadQuestion();
-      
-      if wrong:
-        showResults(sorry you go home with no money); Pending// print a message with the earned amount
-
-    */
-
-
+  // check if answer is R/W
   if (app.optionSelected === app.correctAnswer) {
+    //then check if we are working on the last question
     if (app.currentQuestionNumber === 0) {
       app.showResults("Congratulations you're now a millionaire!!!");
       document.querySelector("body").style.border = "2px solid green";
     } else {
+      //play a sound of correct answer (pending)
+      //* Check why is showing the past prize li*/
       app.currentQuestionNumber -= 1; // every question loaded
-      // console.log("Answer is correct");
       app.loadQuestion();
     }
-
   } else {
-    app.showResults("Please try again!");
+    //play a sound of wrong answer (pending)
+    let message = "";
+    if (app.playerPrize != "") {
+      message = `You are going home with ${app.playerPrize}`;
+    } else {
+      message = "Please try again!"
+    }
+
+    app.showResults(message);
     document.querySelector("body").style.border = "2px solid green";
   }
 };//Check answer result method
 
 
 app.showResults = (message) => {
-
+  //Stop timer when game is over
+  clearInterval(app.timer);
   //show modal screen
   const modalScreen = document.querySelector(".modal-screen");
   app.toggleScreen(modalScreen);
@@ -312,8 +287,8 @@ app.showResults = (message) => {
   modalMessage.textContent = message;
   const buttonsContainer = document.querySelector(".buttons-container");
   buttonsContainer.innerHTML = "";
+
   /*create 2 buttons */
-  
   const playAgainBtn = document.createElement("button");
   playAgainBtn.setAttribute("id", "play-again-btn")
   playAgainBtn.textContent = "Play Again?";
@@ -330,20 +305,18 @@ app.showResults = (message) => {
 
   buttons.forEach(button => {
     button.addEventListener("click", function () {
-
-        if (this.id === "play-again-btn"){
-         // button "play again?"" (same player)
-         // initialize game
-          app.currentQuestionNumber = 14;
-          app.difficultyLevel = "easy"
-          app.loadQuestion();
-        }else {
-          //button "restart"   (new player)
-          app.toggleScreen(app.header);
-          app.startScreen();
-          app.toggleScreen(app.gameBoardsection);
-        }
-    app.toggleScreen(modalScreen);
+      if (this.id === "play-again-btn") {
+        // initialize game
+        app.playerPrize = "";
+        app.currentQuestionNumber = 14;
+        app.difficultyLevel = "easy"
+        app.loadQuestion();
+      } else {
+        //button "restart"
+        app.toggleScreen(app.gameBoardsection);//hide gameboard screen
+        app.startScreen();//call start screen
+      }
+      app.toggleScreen(modalScreen);
     })
   });
 }//Show results method
