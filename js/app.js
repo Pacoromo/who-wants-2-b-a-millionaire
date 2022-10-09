@@ -377,7 +377,7 @@ app.showResults = (message, sound) => {
     });
   });
   sound.onended = () => {
-    buttonsContainer.classList.remove("non-visible"); //** Check transition timing in css *//
+    buttonsContainer.classList.remove("non-visible"); //** Check transition timing in css  (Pending)*//
   };
 }; //Show results method
 
