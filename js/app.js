@@ -9,7 +9,8 @@ app.explainTheRulesAudio = new Audio("../assets/sounds/explain-the-rules.mp3");
 app.letsPlayAudio = new Audio("../assets/sounds/lets-play.mp3");
 app.correctAnswerAudio = new Audio("../assets/sounds/correct-answer.mp3");
 app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
-app.thresholdAudio = new Audio("../assets/sounds/commercial-break.mp3");
+app.timeIsUpAudio = new Audio("../assets/sounds/time-is-up.mp3")
+app.thresholdAudio = new Audio("../assets/sounds/amount-win.mp3");
 app.question14to9Audio = new Audio("../assets/sounds/100-1000-music.mp3");
 app.question9to5Audio = new Audio("../assets/sounds/2000-32000-music.mp3");
 app.question4Audio = new Audio("../assets/sounds/64000-music.mp3");
@@ -45,15 +46,12 @@ app.optionListeners = () => {
 
   buttons.forEach((button, index) => {
     button.addEventListener("click", function () {
-      /* pending
-  -play a background sound
-  */ //stop timer whenever an option is selected
+      //stop timer whenever an option is selected
       clearInterval(app.timer);
       //get user selection
       app.optionSelected = app.answerOptions[index];
       //check answer
       app.checkAnswerResults();
-      // }
     });
   });
 };
@@ -277,7 +275,7 @@ app.setTimer = (seconds) => {
     app.timerDisplay.textContent = timer;
     //check timing
     if (timer === 0) {
-      app.showResults("You've failed. Please try again", app.wrongAnswerAudio);
+      app.showResults("Your time's up! Please try again", app.timeIsUpAudio);
     }
   }, 1000);
 }; //timer method
@@ -305,30 +303,25 @@ app.checkAnswerResults = () => {
   if (app.optionSelected === app.correctAnswer) {
     //check if we are working on the last question
     if (app.currentQuestionNumber === 0) {
-      app.showResults("Congratulations<br>You're now a millionaire!", app.win1MilAudio);
+      app.showResults("Congratulations! You're now a millionaire!", app.win1MilAudio);
       //check if current question is 5 or 10 (money threshold)
     } else if (
       app.currentQuestionNumber === 5 ||
       app.currentQuestionNumber === 10
     ) {
-      //add that prize to the user's prize variable, play a special sound and screen(pending)
+      //add that prize to the user's prize variable
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion(
-        `Congratulations, you've just won ${app.playerPrize}`,
-        app.thresholdAudio
-      );
+      app.loadQuestion(`Congratulations! You've just won: ${app.playerPrize}`, app.thresholdAudio);
     } else {
-      //play a sound of correct answer (pending)
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion("You are correct", app.correctAnswerAudio);
+      app.loadQuestion("You are correct!", app.correctAnswerAudio);
     }
   } else {
-    //play a sound of wrong answer (pending)
     let audio,
       message = "";
     if (app.playerPrize != "") {
-      message = `You are going home with ${app.playerPrize}`;
+      message = `You are going home with: ${app.playerPrize}`;
       audio = app.thresholdAudio;
     } else {
       message = "Please try again!";
@@ -353,7 +346,7 @@ app.showResults = (message, sound) => {
   //print message
   const modalMessage = document.querySelector(".message");
   modalMessage.innerHTML = "";
-  modalMessage.innerHTML = message;
+  modalMessage.textContent = message;
   const buttonsContainer = document.querySelector(".buttons-container");
   buttonsContainer.classList.add("non-visible");
   buttonsContainer.innerHTML = "";
