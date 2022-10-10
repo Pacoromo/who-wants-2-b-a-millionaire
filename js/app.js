@@ -145,12 +145,12 @@ app.gameBoardScreen = () => {
 //Load questions method
 
 app.loadQuestion = (message, audio) => {
-  app.toggleScreen(app.gameBoardSection); //hide game board temporaily
-  const loaderScreen = document.querySelector(".loader-screen"); //show loader screen
-  app.toggleScreen(loaderScreen);
-  const loaderMessage = document.querySelector(".loader-message"); //display message inside loader screen
-  loaderMessage.innerHTML = message;
-  loaderMessage.classList.add("text-animation");
+  app.toggleScreen(app.gameBoardSection); //hide game board while question loads
+  app.loaderScreen = document.querySelector(".loader-screen"); //show loader screen
+  app.toggleScreen(app.loaderScreen);
+  app.loaderMessage = document.querySelector(".loader-message"); //display message inside loader screen
+  app.loaderMessage.innerHTML = message;
+  app.loaderMessage.classList.add("text-animation");
   //stop any question audio background playing at the moment
   app.gameAudioPlaying.load();
   audio.play(); //play corresponding audio
@@ -221,7 +221,7 @@ app.shuffleAnswers = (array) => {
 
 //Populate gameboard after loading question method
 
-app.populateBoard = ()=>{
+app.populateBoard = () => {
   //Show walk away button after first question
   if (app.currentQuestionNumber === 13) {
     app.walkAwayBtn.classList.remove("non-visible");
@@ -231,8 +231,8 @@ app.populateBoard = ()=>{
   //Show game board after the board has been populated
   app.toggleScreen(app.gameBoardSection);
   //Hide loader screen
-  loaderMessage.classList.remove("text-animation");
-  app.toggleScreen(loaderScreen);
+  app.loaderMessage.classList.remove("text-animation");
+  app.toggleScreen(app.loaderScreen);
   // Play audio according to question number
   app.playQuestionsAudio();
 };//Populate board
