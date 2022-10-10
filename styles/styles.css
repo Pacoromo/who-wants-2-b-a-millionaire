@@ -765,6 +765,64 @@ form .button.border:hover:before, form .button.border:hover:after {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+.modal-screen .message {
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.modal-screen .buttons-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.modal-screen button {
+  margin: 0.5em;
+  position: relative;
+  display: block;
+  background: transparent;
+  width: 250px;
+  height: 80px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  /* Button Border Style */
+  /* Button hover styles */
+}
+.modal-screen button:before, .modal-screen button:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 0px;
+  height: 39px;
+  z-index: -1;
+  border: 2px solid #FFF;
+  background-color: #6D7AC3;
+}
+.modal-screen button:before {
+  top: 0px;
+  -webkit-transform: perspective(10px) rotateX(2deg);
+          transform: perspective(10px) rotateX(2deg);
+  border-bottom: none;
+}
+.modal-screen button:after {
+  top: 41px;
+  -webkit-transform: perspective(10px) rotateX(-2deg);
+          transform: perspective(10px) rotateX(-2deg);
+  border-top: none;
+}
+.modal-screen button:hover:before, .modal-screen button:hover:after {
+  background-color: #DC9E3F;
+}
 
 .loader-screen {
   position: absolute;
