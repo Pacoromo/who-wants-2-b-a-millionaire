@@ -1,0 +1,106 @@
+@use "./variables" as *;
+
+
+@media (min-width: 768px) {
+    .game-board-screen {
+        flex-direction: row;
+
+        .prizes-container .prize-list li {
+            display: block;
+        }
+
+        .timer-container {
+            // font-size: 2em;
+            top: 5%;
+            left: 35%;
+            transform: translateX(-50%);
+
+            p {
+                margin: 0;
+            }
+        }
+
+
+        .game-board {
+            width: 70%;
+
+            .question {
+                background-color: $primaryColour;
+                padding: 1em;
+                margin: 1em;
+            }
+
+            .buttons {
+                padding: 0;
+            }
+
+            button {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+
+        .score-container {
+            width: 25%;
+            height: 100%;
+            overflow: hidden;
+
+            .player-name {
+                margin-top: 0;
+            }
+
+            .prize-list {
+                margin-bottom: 1.5em;
+
+                li {
+                    width: 60%;
+                    height: 35px;
+                    line-height: 35px;
+                    // margin: .15em 0;
+
+                    /* Button Border Style */
+                    &:before,
+                    &:after {
+                        width: 100%;
+                        height: 17px;
+                    }
+
+                    &:before {
+                        top: 0px;
+                        transform: perspective(5px) rotateX(3deg);
+                    }
+
+                    &:after {
+                        top: 17px;
+                        transform: perspective(5px) rotateX(-3deg);
+                    }
+                }
+
+                +p {
+                    position: absolute;
+                    width: max-content;
+                    left: 50%;
+                    transform: translateX(-50%) rotateZ(-10deg);
+                    bottom: 0em;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 996px) {
+
+    .game-board {
+
+        .buttons {
+            display: flex;
+            align-items: center;
+
+            li {
+                width: 50%;
+            }
+
+        }
+    }
+}
