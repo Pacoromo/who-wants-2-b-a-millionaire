@@ -638,6 +638,19 @@ form .button.border:hover:before, form .button.border:hover:after {
 .game-board-screen .prize-list + p {
   color: #DC9E3F;
 }
+.game-board-screen .walk-away-btn {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  top: 0;
+  right: 0;
+  margin-top: 1em;
+}
+.game-board-screen .walk-away-btn img {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
 .game-board-screen .timer-container {
   position: absolute;
   top: 0;

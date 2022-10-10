@@ -11,6 +11,7 @@ app.correctAnswerAudio = new Audio("../assets/sounds/correct-answer.mp3");
 app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
 app.timeIsUpAudio = new Audio("../assets/sounds/time-is-up.mp3")
 app.thresholdAudio = new Audio("../assets/sounds/amount-win.mp3");
+app.applauseAudio = new Audio("../assets/sounds/applause.mp3");
 app.question14to9Audio = new Audio("../assets/sounds/100-1000-music.mp3");
 app.question9to5Audio = new Audio("../assets/sounds/2000-32000-music.mp3");
 app.question4Audio = new Audio("../assets/sounds/64000-music.mp3");
@@ -55,6 +56,32 @@ app.optionListeners = () => {
     });
   });
 };
+
+//Player Life lines options
+
+app.playerLifelinesListeners = () => {
+  const buttons = document.querySelectorAll(".player-options button");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function () {
+      clearInterval(app.timer);
+      app.lifeLineSelected = this.id
+      app.checkLifeLineSelected();
+    })
+  });
+};// player life lines
+
+
+//Check Life Line Selected Method  (first Strecht goal)
+
+app.checkLifeLineSelected = () => {
+  if (app.lifeLineSelected === "walk-away") {
+    app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
+  }
+  //2 more stretch Goal after this
+};
+
+
 
 //Screen display toggle
 
@@ -109,6 +136,8 @@ app.initializeGame = () => {
   app.playerPrize = "";
   app.currentQuestionNumber = 14;
   app.difficultyLevel = "easy";
+  app.walkAwayBtn = document.getElementById("walk-away");
+  app.walkAwayBtn.classList.add("non-visible");
 };
 
 //Show gameboard screen
@@ -276,7 +305,7 @@ app.setTimer = (seconds) => {
     timer -= 1; //Every Second
     app.timerDisplay.textContent = timer;
     //check timing
-    if (timer === 0) {      
+    if (timer === 0) {
       app.showResults(`Your time's up!<br>Please try again:`, app.timeIsUpAudio);
     }
   }, 1000);
@@ -293,6 +322,9 @@ app.currentPrize = () => {
   });
   //Add the class .active-prize to the current li[index](style accordingly)
   app.activePrize = prizes[app.currentQuestionNumber];
+  //Create a variable for the amount already earned
+  app.lastAmount = prizes[app.currentQuestionNumber + 1]
+  console.log(app.lastAmount);
   //print the current prize element
   app.activePrize.classList.add("active-prize");
   console.log(app.correctAnswer);
@@ -301,6 +333,10 @@ app.currentPrize = () => {
 //check answers method
 
 app.checkAnswerResults = () => {
+  //print walk away button after first question
+  if (app.currentQuestionNumber === 14) {
+    app.walkAwayBtn.classList.remove("non-visible");
+  }
   // check if answer is R/W
   if (app.optionSelected === app.correctAnswer) {
     //check if we are working on the last question
@@ -388,6 +424,7 @@ app.init = () => {
   app.startScreen();
   app.getToken();
   app.optionListeners();
+  app.playerLifelinesListeners();
 };
 
 app.init();
