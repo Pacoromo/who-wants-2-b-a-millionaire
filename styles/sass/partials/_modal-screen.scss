@@ -15,9 +15,11 @@
     transition: all .3s;
 
     .message {
-        width: min-content;
+        // width: max-content;
         font-size: 1.8rem;
         text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .buttons-container{

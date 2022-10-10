@@ -766,11 +766,10 @@ form .button.border:hover:before, form .button.border:hover:after {
   transition: all 0.3s;
 }
 .modal-screen .message {
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
   font-size: 1.8rem;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .modal-screen .buttons-container {
   display: -webkit-box;
@@ -858,7 +857,7 @@ form .button.border:hover:before, form .button.border:hover:after {
   left: 50%;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
 }
 .loader-screen .loader-message.text-animation {

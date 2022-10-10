@@ -127,7 +127,7 @@ app.loadQuestion = (message, audio) => {
   const loaderScreen = document.querySelector(".loader-screen"); //show loader screen
   app.toggleScreen(loaderScreen);
   const loaderMessage = document.querySelector(".loader-message"); //display message inside loader screen
-  loaderMessage.textContent = message;
+  loaderMessage.innerHTML = message;
   loaderMessage.classList.add("text-animation");
   app.stopQuestionsBackgroundAudio(); //stop any question audio background playing at the moment
   audio.play(); //play corresponding audio
@@ -276,8 +276,8 @@ app.setTimer = (seconds) => {
     timer -= 1; //Every Second
     app.timerDisplay.textContent = timer;
     //check timing
-    if (timer === 0) {
-      app.showResults("Your time's up! Please try again", app.timeIsUpAudio);
+    if (timer === 0) {      
+      app.showResults(`Your time's up!<br>Please try again:`, app.timeIsUpAudio);
     }
   }, 1000);
 }; //timer method
@@ -305,7 +305,7 @@ app.checkAnswerResults = () => {
   if (app.optionSelected === app.correctAnswer) {
     //check if we are working on the last question
     if (app.currentQuestionNumber === 0) {
-      app.showResults("Congratulations! You're now a millionaire!", app.win1MilAudio);
+      app.showResults(`Congratulations!<br>You're now a millionaire!`, app.win1MilAudio);
       //check if current question is 5 or 10 (money threshold)
     } else if (
       app.currentQuestionNumber === 5 ||
@@ -314,9 +314,7 @@ app.checkAnswerResults = () => {
       //add that prize to the user's prize variable
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion(`Congratulations!
-      You've just won:
-      ${app.playerPrize}`, app.thresholdAudio);
+      app.loadQuestion(`Congratulations!<br>You've just won:<br>${app.playerPrize}`, app.thresholdAudio);
     } else {
       app.currentQuestionNumber -= 1; //go for next question
       app.loadQuestion("You are correct!", app.correctAnswerAudio);
@@ -350,7 +348,7 @@ app.showResults = (message, sound) => {
   //print message
   const modalMessage = document.querySelector(".message");
   modalMessage.innerHTML = "";
-  modalMessage.textContent = message;
+  modalMessage.innerHTML = message;
   const buttonsContainer = document.querySelector(".buttons-container");
   buttonsContainer.classList.add("non-visible");
   buttonsContainer.innerHTML = "";
