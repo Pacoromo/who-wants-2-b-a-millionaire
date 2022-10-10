@@ -164,7 +164,14 @@ app.loadQuestion = (message, audio) => {
   });
   // Use the fetch API to make a request to the open trivia API endpoint
   fetch(url)
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        
+      } else {
+        
+      }
+      response.json();
+    })
     .then((jsonResponse) => {
       /* The response is an object with the next structure 
       {
