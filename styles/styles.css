@@ -254,6 +254,15 @@ button {
 
 h1 {
   font-family: "copperplate", sans-serif;
+  font-size: clamp(1.8rem, 0.6364rem + 7.2727vw, 5rem);
+  margin-top: 30vh;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.timer {
+  color: #DC9E3F;
+  font-size: clamp(1rem, 0.6364rem + 2.2727vw, 2rem);
 }
 
 body {
@@ -344,13 +353,6 @@ header .button.border:after {
 }
 header .button.border:hover:before, header .button.border:hover:after {
   background-color: #DC9E3F;
-}
-
-h1 {
-  font-size: clamp(1.8rem, 0.6364rem + 7.2727vw, 5rem);
-  margin-top: 40vh;
-  text-align: center;
-  text-transform: uppercase;
 }
 
 .rules-screen {
@@ -639,7 +641,6 @@ form .button.border:hover:before, form .button.border:hover:after {
 .game-board-screen .timer-container {
   position: absolute;
   top: 0;
-  color: #DC9E3F;
 }
 .game-board-screen .question {
   margin-top: 0;
@@ -661,7 +662,6 @@ form .button.border:hover:before, form .button.border:hover:after {
     display: block;
   }
   .game-board-screen .timer-container {
-    font-size: 2em;
     top: 5%;
     left: 35%;
     -webkit-transform: translateX(-50%);

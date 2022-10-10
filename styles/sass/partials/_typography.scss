@@ -16,7 +16,9 @@
         url(../assets/fonts/librefranklin-extrabold-webfont.woff) format("woff"),
         url(../assets/fonts/librefranklin-extrabold-webfont.ttf) format("truetype");
 }
+//For font calculations use:
 
+//https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
 html {
     font-size: 125%;
 }
@@ -29,4 +31,13 @@ button {
 
 h1 {
     font-family: "copperplate", sans-serif;
+    font-size: clamp(1.8rem, 0.6364rem + 7.2727vw, 5rem);
+    margin-top: 30vh;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.timer {
+    color: $accentColour;
+    font-size: clamp(1rem, 0.6364rem + 2.2727vw, 2rem);
 }

@@ -1,7 +1,4 @@
 @use "./variables" as *;
-//For font calculations use:
-
-//https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
 
 header {
     position: absolute;
@@ -80,11 +77,4 @@ header {
             background-color: $accentColour;
         }
     }
-}
-
-h1 {
-    font-size: clamp(1.8rem, 0.6364rem + 7.2727vw, 5rem);
-    margin-top: 40vh;
-    text-align: center;
-    text-transform: uppercase;
 }
