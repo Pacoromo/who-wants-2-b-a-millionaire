@@ -664,96 +664,6 @@ form .button.border:hover:before, form .button.border:hover:after {
   text-transform: capitalize;
 }
 
-@media (min-width: 768px) {
-  .game-board-screen {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-  }
-  .game-board-screen .prizes-container .prize-list li {
-    display: block;
-  }
-  .game-board-screen .timer-container {
-    top: 5%;
-    left: 35%;
-    -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
-  }
-  .game-board-screen .timer-container p {
-    margin: 0;
-  }
-  .game-board-screen .game-board {
-    width: 70%;
-  }
-  .game-board-screen .game-board .question {
-    background-color: #0E0F5C;
-    padding: 1em;
-    margin: 1em;
-  }
-  .game-board-screen .game-board .buttons {
-    padding: 0;
-  }
-  .game-board-screen .game-board button {
-    width: 90%;
-    margin: 0 auto;
-  }
-  .game-board-screen .score-container {
-    width: 25%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .game-board-screen .score-container .player-name {
-    margin-top: 0;
-  }
-  .game-board-screen .score-container .prize-list {
-    margin-bottom: 1.5em;
-  }
-  .game-board-screen .score-container .prize-list li {
-    width: 60%;
-    height: 35px;
-    line-height: 35px;
-    /* Button Border Style */
-  }
-  .game-board-screen .score-container .prize-list li:before, .game-board-screen .score-container .prize-list li:after {
-    width: 100%;
-    height: 17px;
-  }
-  .game-board-screen .score-container .prize-list li:before {
-    top: 0px;
-    -webkit-transform: perspective(5px) rotateX(3deg);
-            transform: perspective(5px) rotateX(3deg);
-  }
-  .game-board-screen .score-container .prize-list li:after {
-    top: 17px;
-    -webkit-transform: perspective(5px) rotateX(-3deg);
-            transform: perspective(5px) rotateX(-3deg);
-  }
-  .game-board-screen .score-container .prize-list + p {
-    position: absolute;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    left: 50%;
-    -webkit-transform: translateX(-50%) rotateZ(-10deg);
-            transform: translateX(-50%) rotateZ(-10deg);
-    bottom: 0em;
-    margin: 0;
-  }
-}
-@media (min-width: 996px) {
-  .game-board .buttons {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
-  .game-board .buttons li {
-    width: 50%;
-  }
-}
 .modal-screen {
   position: absolute;
   top: 0;
@@ -941,5 +851,95 @@ form .button.border:hover:before, form .button.border:hover:after {
   }
   100% {
     font-size: 2rem;
+  }
+}
+@media (min-width: 768px) {
+  .game-board-screen {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .game-board-screen .prizes-container .prize-list li {
+    display: block;
+  }
+  .game-board-screen .timer-container {
+    top: 5%;
+    left: 35%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  .game-board-screen .timer-container p {
+    margin: 0;
+  }
+  .game-board-screen .game-board {
+    width: 70%;
+  }
+  .game-board-screen .game-board .question {
+    background-color: #0E0F5C;
+    padding: 1em;
+    margin: 1em;
+  }
+  .game-board-screen .game-board .buttons {
+    padding: 0;
+  }
+  .game-board-screen .game-board button {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .game-board-screen .score-container {
+    width: 25%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .game-board-screen .score-container .player-name {
+    margin-top: 0;
+  }
+  .game-board-screen .score-container .prize-list {
+    margin-bottom: 1.5em;
+  }
+  .game-board-screen .score-container .prize-list li {
+    width: 60%;
+    height: 35px;
+    line-height: 35px;
+    /* Button Border Style */
+  }
+  .game-board-screen .score-container .prize-list li:before, .game-board-screen .score-container .prize-list li:after {
+    width: 100%;
+    height: 17px;
+  }
+  .game-board-screen .score-container .prize-list li:before {
+    top: 0px;
+    -webkit-transform: perspective(5px) rotateX(3deg);
+            transform: perspective(5px) rotateX(3deg);
+  }
+  .game-board-screen .score-container .prize-list li:after {
+    top: 17px;
+    -webkit-transform: perspective(5px) rotateX(-3deg);
+            transform: perspective(5px) rotateX(-3deg);
+  }
+  .game-board-screen .score-container .prize-list + p {
+    position: absolute;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    left: 50%;
+    -webkit-transform: translateX(-50%) rotateZ(-10deg);
+            transform: translateX(-50%) rotateZ(-10deg);
+    bottom: 0em;
+    margin: 0;
+  }
+}
+@media (min-width: 996px) {
+  .game-board .buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .game-board .buttons li {
+    width: 50%;
   }
 }
