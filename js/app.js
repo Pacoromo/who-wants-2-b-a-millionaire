@@ -1,3 +1,4 @@
+//Namespace
 const app = {};
 
 app.apiURL = "https://opentdb.com/api.php";
@@ -34,52 +35,6 @@ app.getToken = () => {
     });
 };
 
-//options listeners
-
-app.optionListeners = () => {
-  const buttons = document.querySelectorAll(".option-btn");
-
-  buttons.forEach((button, index) => {
-    button.addEventListener("click", function () {
-      //stop timer whenever an option is selected
-      clearInterval(app.timer);
-      //get user selection
-      app.optionSelected = app.answerOptions[index];
-      //check answer
-      app.checkAnswerResults();
-    });
-  });
-};
-
-//Player Life lines options
-
-app.playerLifelinesListeners = () => {
-  const buttons = document.querySelectorAll(".player-options button");
-
-  buttons.forEach(button => {
-    button.addEventListener("click", function () {
-      clearInterval(app.timer);
-      app.selectedLifeline = this.id
-      app.checkLifeLineSelected();
-    })
-  });
-};// player life lines
-
-
-//Check Life Line Selected Method  (first Strecht goal)
-
-app.checkLifeLineSelected = () => {
-  if (app.selectedLifeline === "walk-away") {
-    app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
-  }//2 more stretch goals after this
-};
-
-//Screen display toggle
-
-app.toggleScreen = (element) => {
-  element.classList.toggle("non-visible");
-};
-
 //Show start screen
 
 app.startScreen = () => {
@@ -97,6 +52,52 @@ app.startScreen = () => {
     { once: true }
   );
 }; //show start screen method
+
+//options listeners
+
+app.optionListeners = () => {
+  const buttons = document.querySelectorAll(".option-btn");
+
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", function () {
+      //stop timer whenever an option is selected
+      clearInterval(app.timer);
+      //get user selection
+      app.optionSelected = app.answerOptions[index];
+      //check answer
+      app.checkAnswerResults();
+    });
+  });
+};//options listeners
+
+//Player Life lines options
+
+app.playerLifelinesListeners = () => {
+  const buttons = document.querySelectorAll(".player-options button");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function () {
+      clearInterval(app.timer);
+      app.selectedLifeline = this.id
+      app.checkLifeLineSelected();
+    })
+  });
+};// player life lines
+
+
+//Check Life Line Selected Method  (first Stretch goal)
+
+app.checkLifeLineSelected = () => {
+  if (app.selectedLifeline === "walk-away") {
+    app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
+  }//2 more stretch goals after this
+};//life lines
+
+//Screen display toggle
+
+app.toggleScreen = (element) => {
+  element.classList.toggle("non-visible");
+};
 
 //Show rules screen
 
@@ -153,13 +154,13 @@ app.loadQuestion = (message, audio) => {
   //stop any question audio background playing at the moment
   app.gameAudioPlaying.load();
   audio.play(); //play corresponding audio
-
+  //API request
   const url = new URL(app.apiURL);
   url.search = new URLSearchParams({
     token: app.token,
     amount: 1,
     type: "multiple",
-    difficulty: app.difficultyLevel,
+    difficulty: app.difficultyLevel,//Changes after every threshold
   });
   // Use the fetch API to make a request to the open trivia API endpoint
   fetch(url)
@@ -185,44 +186,10 @@ app.loadQuestion = (message, audio) => {
       app.breakDownInfo(jsonResponse.results[0]);
       //print information on the board and hide loader when audio has finished playing      
       audio.onended = () => {
-        //Call a method to print information on the board
-        app.printGameBoardInfo();
-        //print walk away button after first question
-        if (app.currentQuestionNumber === 13) {
-          app.walkAwayBtn.classList.remove("non-visible");
-        }
-        //Show game board after the board has been populated
-        app.toggleScreen(app.gameBoardSection);
-        //Hide loader screen
-        loaderMessage.classList.remove("text-animation");
-        app.toggleScreen(loaderScreen);
-        // Play audio according to question number
-        app.playQuestionsAudio();
+        app.populateBoard();
       };
     });
 }; //load questions method
-
-//Play Questions Audio accordingly
-
-app.playQuestionsAudio = () => {
-  if (app.currentQuestionNumber >= 10) {
-    app.gameAudioPlaying = app.question14to9Audio;
-  } else if (app.currentQuestionNumber >= 5) {
-    app.gameAudioPlaying = app.question9to5Audio;
-  } else if (app.currentQuestionNumber === 4) {
-    app.gameAudioPlaying = app.question4Audio;
-  } else if (
-    app.currentQuestionNumber === 3 ||
-    app.currentQuestionNumber === 2
-  ) {
-    app.gameAudioPlaying = app.question3and2Audio;
-  } else if (app.currentQuestionNumber === 1) {
-    app.gameAudioPlaying = app.question1Audio;
-  } else {
-    app.gameAudioPlaying = app.question0Audio;
-  }
-  app.gameAudioPlaying.play();
-}; //Play Questions Audio
 
 //break down info method
 
@@ -251,6 +218,46 @@ app.shuffleAnswers = (array) => {
   }
   return array;
 }; //Shuffle array method
+
+//Populate gameboard after loading question method
+
+app.populateBoard = ()=>{
+  //Show walk away button after first question
+  if (app.currentQuestionNumber === 13) {
+    app.walkAwayBtn.classList.remove("non-visible");
+  }
+  //Call a method to print information on the board
+  app.printGameBoardInfo();
+  //Show game board after the board has been populated
+  app.toggleScreen(app.gameBoardSection);
+  //Hide loader screen
+  loaderMessage.classList.remove("text-animation");
+  app.toggleScreen(loaderScreen);
+  // Play audio according to question number
+  app.playQuestionsAudio();
+};//Populate board
+
+//Play Questions Audio accordingly
+
+app.playQuestionsAudio = () => {
+  if (app.currentQuestionNumber >= 10) {
+    app.gameAudioPlaying = app.question14to9Audio;
+  } else if (app.currentQuestionNumber >= 5) {
+    app.gameAudioPlaying = app.question9to5Audio;
+  } else if (app.currentQuestionNumber === 4) {
+    app.gameAudioPlaying = app.question4Audio;
+  } else if (
+    app.currentQuestionNumber === 3 ||
+    app.currentQuestionNumber === 2
+  ) {
+    app.gameAudioPlaying = app.question3and2Audio;
+  } else if (app.currentQuestionNumber === 1) {
+    app.gameAudioPlaying = app.question1Audio;
+  } else {
+    app.gameAudioPlaying = app.question0Audio;
+  }
+  app.gameAudioPlaying.play();
+}; //Play Questions Audio
 
 //print board method
 
