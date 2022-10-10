@@ -792,7 +792,20 @@ form .button.border:hover:before, form .button.border:hover:after {
   transition: all 0.3s;
 }
 .loader-screen .loader-message {
+  position: absolute;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  top: 20%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
   font-size: 2rem;
+  text-align: center;
+}
+.loader-screen .loader-message.text-animation {
+  -webkit-animation: zoomtext 1s;
+          animation: zoomtext 1s;
 }
 .loader-screen .loader-container {
   position: relative;
@@ -836,5 +849,27 @@ form .button.border:hover:before, form .button.border:hover:after {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes zoomtext {
+  0% {
+    font-size: 0.1rem;
+  }
+  90% {
+    font-size: 2.5rem;
+  }
+  100% {
+    font-size: 2rem;
+  }
+}
+@keyframes zoomtext {
+  0% {
+    font-size: 0.1rem;
+  }
+  90% {
+    font-size: 2.5rem;
+  }
+  100% {
+    font-size: 2rem;
   }
 }

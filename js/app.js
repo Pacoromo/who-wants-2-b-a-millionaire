@@ -128,6 +128,7 @@ app.loadQuestion = (message, audio) => {
   app.toggleScreen(loaderScreen);
   const loaderMessage = document.querySelector(".loader-message"); //display message inside loader screen
   loaderMessage.textContent = message;
+  loaderMessage.classList.add("text-animation");
   app.stopQuestionsBackgroundAudio(); //stop any question audio background playing at the moment
   audio.play(); //play corresponding audio
 
@@ -167,6 +168,7 @@ app.loadQuestion = (message, audio) => {
         //Show game board after the board has been populated
         app.toggleScreen(app.gameBoardSection);
         //Hide loader screen
+        loaderMessage.classList.remove("text-animation");
         app.toggleScreen(loaderScreen);
         // Play audio according to question number
         app.playQuestionsAudio();
@@ -312,7 +314,9 @@ app.checkAnswerResults = () => {
       //add that prize to the user's prize variable
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion(`Congratulations! You've just won: ${app.playerPrize}`, app.thresholdAudio);
+      app.loadQuestion(`Congratulations!
+      You've just won:
+      ${app.playerPrize}`, app.thresholdAudio);
     } else {
       app.currentQuestionNumber -= 1; //go for next question
       app.loadQuestion("You are correct!", app.correctAnswerAudio);
