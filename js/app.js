@@ -20,16 +20,6 @@ app.question3and2Audio = new Audio("../assets/sounds/125000-250000-music.mp3");
 app.question1Audio = new Audio("../assets/sounds/500000-music.mp3");
 app.question0Audio = new Audio("../assets/sounds/1000000-music.mp3");
 
-//Array of all the audios that have to be stopped after answering a question
-app.allQuestionsAudio = [
-  app.question14to9Audio,
-  app.question9to5Audio,
-  app.question4Audio,
-  app.question3and2Audio,
-  app.question1Audio,
-  app.question0Audio
-];
-
 //*************************************************/
 //******************Functions*********************//
 //*************************************************/
@@ -69,7 +59,7 @@ app.playerLifelinesListeners = () => {
   buttons.forEach(button => {
     button.addEventListener("click", function () {
       clearInterval(app.timer);
-      app.lifeLineSelected = this.id
+      app.selectedLifeline = this.id
       app.checkLifeLineSelected();
     })
   });
@@ -79,7 +69,7 @@ app.playerLifelinesListeners = () => {
 //Check Life Line Selected Method  (first Strecht goal)
 
 app.checkLifeLineSelected = () => {
-  if (app.lifeLineSelected === "walk-away") {
+  if (app.selectedLifeline === "walk-away") {
     app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
   }//2 more stretch goals after this
 };
@@ -139,6 +129,7 @@ app.initializeGame = () => {
   app.difficultyLevel = "easy";
   app.walkAwayBtn = document.getElementById("walk-away");
   app.walkAwayBtn.classList.add("non-visible");
+  app.gameAudioPlaying = app.question14to9Audio;
 };
 
 //Show gameboard screen
@@ -159,7 +150,8 @@ app.loadQuestion = (message, audio) => {
   const loaderMessage = document.querySelector(".loader-message"); //display message inside loader screen
   loaderMessage.innerHTML = message;
   loaderMessage.classList.add("text-animation");
-  app.stopQuestionsBackgroundAudio(); //stop any question audio background playing at the moment
+  //stop any question audio background playing at the moment
+  app.gameAudioPlaying.load();
   audio.play(); //play corresponding audio
 
   const url = new URL(app.apiURL);
@@ -191,10 +183,14 @@ app.loadQuestion = (message, audio) => {
       */
       //Call a method to break down information from the response object\
       app.breakDownInfo(jsonResponse.results[0]);
-      //print information on the board and hide loader when audio has finished playing
+      //print information on the board and hide loader when audio has finished playing      
       audio.onended = () => {
         //Call a method to print information on the board
         app.printGameBoardInfo();
+        //print walk away button after first question
+        if (app.currentQuestionNumber === 13) {
+          app.walkAwayBtn.classList.remove("non-visible");
+        }
         //Show game board after the board has been populated
         app.toggleScreen(app.gameBoardSection);
         //Hide loader screen
@@ -206,33 +202,26 @@ app.loadQuestion = (message, audio) => {
     });
 }; //load questions method
 
-//Stop Questions audio method
-
-app.stopQuestionsBackgroundAudio = () => {
-  app.allQuestionsAudio.forEach((audioFile) => {
-    audioFile.load();
-  });
-}; // Stop Audio Method
-
 //Play Questions Audio accordingly
 
 app.playQuestionsAudio = () => {
   if (app.currentQuestionNumber >= 10) {
-    app.question14to9Audio.play();
+    app.gameAudioPlaying = app.question14to9Audio;
   } else if (app.currentQuestionNumber >= 5) {
-    app.question9to5Audio.play();
+    app.gameAudioPlaying = app.question9to5Audio;
   } else if (app.currentQuestionNumber === 4) {
-    app.question4Audio.play();
+    app.gameAudioPlaying = app.question4Audio;
   } else if (
     app.currentQuestionNumber === 3 ||
     app.currentQuestionNumber === 2
   ) {
-    app.question3and2Audio.play();
+    app.gameAudioPlaying = app.question3and2Audio;
   } else if (app.currentQuestionNumber === 1) {
-    app.question1Audio.play();
+    app.gameAudioPlaying = app.question1Audio;
   } else {
-    app.question0Audio.play();
+    app.gameAudioPlaying = app.question0Audio;
   }
+  app.gameAudioPlaying.play();
 }; //Play Questions Audio
 
 //break down info method
@@ -332,10 +321,6 @@ app.currentPrize = () => {
 //check answers method
 
 app.checkAnswerResults = () => {
-  //print walk away button after first question
-  if (app.currentQuestionNumber === 14) {
-    app.walkAwayBtn.classList.remove("non-visible");
-  }
   // check if answer is R/W
   if (app.optionSelected === app.correctAnswer) {
     //check if we are working on the last question
@@ -372,7 +357,7 @@ app.showResults = (message, sound) => {
   //Stop timer when game is over
   clearInterval(app.timer);
   //stop sounds from questions board
-  app.stopQuestionsBackgroundAudio();
+  app.gameAudioPlaying.load();
   //hide game board
   app.toggleScreen(app.gameBoardSection);
   //play corresponding sound
