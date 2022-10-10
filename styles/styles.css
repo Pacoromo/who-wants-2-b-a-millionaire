@@ -376,6 +376,7 @@ h1 {
   transition: all 0.3s;
 }
 .rules-screen h2 {
+  color: #DC9E3F;
   font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
   text-align: center;
   margin: 0;
@@ -404,6 +405,9 @@ form {
           align-items: center;
 }
 form input[type=text] {
+  background-color: transparent;
+  color: #FFF;
+  border: 2px solid #FFF;
   width: 235px;
   margin: 0.4em 0;
 }
@@ -473,14 +477,15 @@ form .button.border:hover:before, form .button.border:hover:after {
   -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   opacity: 1;
   pointer-events: initial;
+  text-align: center;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -488,16 +493,201 @@ form .button.border:hover:before, form .button.border:hover:after {
   list-style-type: none;
   padding: 0;
 }
+.game-board-screen .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 50vh;
+  padding-bottom: 0.7em;
+}
+.game-board-screen button {
+  position: relative;
+  display: block;
+  background: transparent;
+  width: 100%;
+  height: 80px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  /* Button Border Style */
+  /* Button hover styles */
+}
+.game-board-screen button:before, .game-board-screen button:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 0px;
+  height: 39px;
+  z-index: -1;
+}
+.game-board-screen button:before {
+  top: 0px;
+  -webkit-transform: perspective(10px) rotateX(2deg);
+          transform: perspective(10px) rotateX(2deg);
+}
+.game-board-screen button:after {
+  top: 41px;
+  -webkit-transform: perspective(10px) rotateX(-2deg);
+          transform: perspective(10px) rotateX(-2deg);
+}
+.game-board-screen button.border:before, .game-board-screen button.border:after {
+  border: 2px solid #FFF;
+  background-color: #6D7AC3;
+}
+.game-board-screen button.border:before {
+  border-bottom: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+.game-board-screen button.border:after {
+  border-top: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+.game-board-screen button.border:hover:before, .game-board-screen button.border:hover:after {
+  background-color: #DC9E3F;
+}
+.game-board-screen .score-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.game-board-screen .prize-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.game-board-screen .prize-list li {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #FFF;
+  border: none;
+  /* Button Border Style */
+}
+.game-board-screen .prize-list li.active-prize.border:before, .game-board-screen .prize-list li.active-prize.border:after {
+  background-color: #DC9E3F;
+}
+.game-board-screen .prize-list li:before, .game-board-screen .prize-list li:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 0px;
+  height: 26px;
+  z-index: -1;
+}
+.game-board-screen .prize-list li:before {
+  -webkit-transform: perspective(5px) rotateX(3deg);
+          transform: perspective(5px) rotateX(3deg);
+}
+.game-board-screen .prize-list li:after {
+  top: 30px;
+  -webkit-transform: perspective(5px) rotateX(-3deg);
+          transform: perspective(5px) rotateX(-3deg);
+}
+.game-board-screen .prize-list li.border:before, .game-board-screen .prize-list li.border:after {
+  border: 2px solid #FFF;
+}
+.game-board-screen .prize-list li.border:before {
+  border-bottom: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
+.game-board-screen .prize-list li.border:after {
+  border-top: none;
+  /* to prevent the border-line showing up in the middle of the shape */
+}
 .game-board-screen .prize-list li:not(.active-prize) {
   display: none;
 }
 .game-board-screen p {
   text-transform: capitalize;
 }
+.game-board-screen .timer-container {
+  position: absolute;
+  top: 0;
+  color: #DC9E3F;
+}
+.game-board-screen .question {
+  border: 2px solid #FFF;
+  padding: 0.2em;
+}
 
+@media (min-width: 768px) {
+  .game-board-screen {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .game-board-screen .prizes-container .prize-list li {
+    display: block;
+  }
+  .game-board-screen .timer-container {
+    font-size: 2em;
+    top: 5%;
+    left: 35%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  .game-board-screen .timer-container p {
+    margin: 0;
+  }
+  .game-board {
+    border: 2px solid;
+    width: 70%;
+  }
+  .game-board .question {
+    background-color: #0E0F5C;
+    padding: 1em;
+    margin: 1em;
+    margin-bottom: 1em;
+  }
+  .game-board .buttons {
+    padding: 0;
+  }
+  .game-board button {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .score-container {
+    width: 25%;
+  }
+}
 @media (min-width: 996px) {
   .game-board-screen .prizes-container .prize-list li {
     display: block;
+  }
+  .game-board .buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .game-board .buttons li {
+    width: 50%;
   }
 }
 .modal-screen {

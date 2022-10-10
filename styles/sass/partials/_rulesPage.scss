@@ -14,6 +14,7 @@
     transition: all .3s;
 
     h2 {
+        color: $accentColour;
         font-size: clamp(2rem, 1.6364rem + 1.8182vw, 3rem);
         text-align: center;
         margin: 0;
@@ -38,6 +39,9 @@ form {
     align-items: center;
 
     input[type="text"] {
+        background-color: transparent;
+        color: $solidWhite;
+        border: 2px solid $solidWhite;
         width: 235px;
         margin: .4em 0;
     }

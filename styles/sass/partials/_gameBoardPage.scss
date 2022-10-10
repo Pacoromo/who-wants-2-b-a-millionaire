@@ -8,10 +8,11 @@
     height: 100%;
     display: flex;
     flex-direction: column-reverse;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     opacity: 1;
     pointer-events: initial;
+    text-align: center;
     transition: all .3s;
 
     ul {
@@ -19,19 +20,262 @@
         padding: 0;
     }
 
-    .prize-list li:not(.active-prize) {
-        display: none;
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        height: 50vh;
+        padding-bottom: .7em;
+    }
+
+    button {
+        position: relative;
+        display: block;
+        background: transparent;
+        width: 100%;
+        height: 80px;
+        // line-height: 60px;
+        // text-align: center;
+        // font-size: 1.5rem;
+        // text-decoration: none;
+        // text-transform: uppercase;
+        // margin-top: 60px;
+        box-sizing: border-box;
+        color: $solidWhite;
+        border: none;
+
+        // z-index: 1;
+        /* Button Border Style */
+        &:before,
+        &:after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            left: 0px;
+            height: 39px;
+            z-index: -1;
+        }
+
+        &:before {
+            top: 0px;
+            transform: perspective(10px) rotateX(2deg);
+        }
+
+        &:after {
+            top: 41px;
+            transform: perspective(10px) rotateX(-2deg);
+        }
+
+        &.border:before,
+        &.border:after {
+            border: 2px solid $solidWhite;
+            background-color: $secondaryColour;
+        }
+
+        &.border:before {
+            border-bottom: none;
+            /* to prevent the border-line showing up in the middle of the shape */
+        }
+
+        &.border:after {
+            border-top: none;
+            /* to prevent the border-line showing up in the middle of the shape */
+        }
+
+        /* Button hover styles */
+        &.border:hover:before,
+        &.border:hover:after {
+            // background: darken($color: $secondaryColour, $amount: 25%)
+            background-color: $accentColour;
+        }
+    }
+
+    .score-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .prize-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        li {
+            position: relative;
+            // display: block;
+            // background: transparent;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            // text-align: center;
+            // font-size: 1.5rem;
+            // text-decoration: none;
+            // text-transform: uppercase;
+            // margin-top: 60px;
+            box-sizing: border-box;
+            color: $solidWhite;
+            border: none;
+
+            // z-index: 1;
+            &.active-prize {
+
+                &.border:before,
+                &.border:after {
+                    background-color: $accentColour;
+                }
+
+            }
+
+            /* Button Border Style */
+            &:before,
+            &:after {
+                position: absolute;
+                content: '';
+                width: 100%;
+                left: 0px;
+                height: 26px;
+                z-index: -1;
+            }
+
+            &:before {
+                transform: perspective(5px) rotateX(3deg);
+            }
+
+            &:after {
+                top: 30px;
+                transform: perspective(5px) rotateX(-3deg);
+            }
+
+            &.border:before,
+            &.border:after {
+                border: 2px solid $solidWhite;
+            }
+
+            &.border:before {
+                border-bottom: none;
+                /* to prevent the border-line showing up in the middle of the shape */
+            }
+
+            &.border:after {
+                border-top: none;
+                /* to prevent the border-line showing up in the middle of the shape */
+            }
+        }
+
+        & li:not(.active-prize) {
+            display: none;
+        }
     }
 
     p {
         text-transform: capitalize;
     }
+
+    .timer-container {
+        position: absolute;
+        top: 0;
+        color: $accentColour;
+    }
+
+    .question {
+        border: 2px solid $solidWhite;
+        padding: .2em;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .game-board-screen {
+        flex-direction: row;
+
+        .prizes-container .prize-list li {
+            display: block;
+        }
+
+        .timer-container {
+            font-size: 2em;
+            top: 5%;
+            left: 35%;
+            transform: translateX(-50%);
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+    .game-board {
+        border: 2px solid;
+        width: 70%;
+
+        .question {
+
+            // color: $accentColour;
+            background-color: $primaryColour;
+            padding: 1em;
+            margin: 1em;
+            margin-bottom: 1em;
+        }
+
+        .buttons {
+            padding: 0;
+        }
+
+        button {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+
+    .score-container {
+        width: 25%;
+    }
+
+
 }
 
 @media (min-width: 996px) {
     .game-board-screen {
         .prizes-container .prize-list li {
             display: block;
+        }
+    }
+
+    .game-board {
+
+        .buttons {
+            display: flex;
+            // flex-direction: column;
+            // justify-content: space-between;
+            align-items: center;
+
+            li {
+                width: 50%;
+            }
+
+            // button {
+            //     width: 50%;
+            //     height: 80px;
+
+            //     // z-index: 1;
+            //     /* Button Border Style */
+            //     &:before,
+            //     &:after {
+            //         width: 50%;
+            //         height: 39px;
+            //     }
+
+            //     &:before {
+            //         top: 0px;
+            //         transform: perspective(10px) rotateX(2deg);
+            //     }
+
+            //     &:after {
+            //         top: 41px;
+            //         transform: perspective(10px) rotateX(-2deg);
+            //     }
+            // }
         }
     }
 }
