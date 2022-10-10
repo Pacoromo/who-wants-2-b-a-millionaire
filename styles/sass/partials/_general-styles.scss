@@ -1,6 +1,8 @@
 body {
     background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
     height: 100vh;
+    overflow: hidden;
+
     //Sections visibility
     .non-visible {
         opacity: 0;
@@ -9,6 +11,6 @@ body {
 }
 
 ul,
- button {
+button {
     margin: 0;
- }
+}

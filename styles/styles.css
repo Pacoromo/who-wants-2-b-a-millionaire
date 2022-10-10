@@ -259,6 +259,7 @@ h1 {
 body {
   background: url(../assets/images/headerBackground.jpg) center/cover no-repeat;
   height: 100vh;
+  overflow: hidden;
 }
 body .non-visible {
   opacity: 0;
@@ -502,6 +503,9 @@ form .button.border:hover:before, form .button.border:hover:after {
   height: 50vh;
   padding-bottom: 0.7em;
 }
+.game-board-screen .buttons li {
+  width: 100%;
+}
 .game-board-screen button {
   position: relative;
   display: block;
@@ -563,6 +567,9 @@ form .button.border:hover:before, form .button.border:hover:after {
       -ms-flex-pack: center;
           justify-content: center;
 }
+.game-board-screen .prizes-container {
+  position: relative;
+}
 .game-board-screen .prize-list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -577,7 +584,7 @@ form .button.border:hover:before, form .button.border:hover:after {
 }
 .game-board-screen .prize-list li {
   position: relative;
-  width: 100%;
+  width: 150px;
   height: 60px;
   line-height: 60px;
   -webkit-box-sizing: border-box;
@@ -586,7 +593,13 @@ form .button.border:hover:before, form .button.border:hover:after {
   border: none;
   /* Button Border Style */
 }
+.game-board-screen .prize-list li.threshold.border:before, .game-board-screen .prize-list li.threshold.border:after {
+  background-color: #6D7AC3;
+}
 .game-board-screen .prize-list li.active-prize.border:before, .game-board-screen .prize-list li.active-prize.border:after {
+  background-color: #479223;
+}
+.game-board-screen .prize-list li.top-prize.border:before, .game-board-screen .prize-list li.top-prize.border:after {
   background-color: #DC9E3F;
 }
 .game-board-screen .prize-list li:before, .game-board-screen .prize-list li:after {
@@ -594,7 +607,7 @@ form .button.border:hover:before, form .button.border:hover:after {
   content: "";
   width: 100%;
   left: 0px;
-  height: 26px;
+  height: 27px;
   z-index: -1;
 }
 .game-board-screen .prize-list li:before {
@@ -620,8 +633,8 @@ form .button.border:hover:before, form .button.border:hover:after {
 .game-board-screen .prize-list li:not(.active-prize) {
   display: none;
 }
-.game-board-screen p {
-  text-transform: capitalize;
+.game-board-screen .prize-list + p {
+  color: #DC9E3F;
 }
 .game-board-screen .timer-container {
   position: absolute;
@@ -629,8 +642,12 @@ form .button.border:hover:before, form .button.border:hover:after {
   color: #DC9E3F;
 }
 .game-board-screen .question {
+  margin-top: 0;
   border: 2px solid #FFF;
-  padding: 0.2em;
+  padding: 0.5em;
+}
+.game-board-screen p {
+  text-transform: capitalize;
 }
 
 @media (min-width: 768px) {
@@ -653,31 +670,65 @@ form .button.border:hover:before, form .button.border:hover:after {
   .game-board-screen .timer-container p {
     margin: 0;
   }
-  .game-board {
-    border: 2px solid;
+  .game-board-screen .game-board {
     width: 70%;
   }
-  .game-board .question {
+  .game-board-screen .game-board .question {
     background-color: #0E0F5C;
     padding: 1em;
     margin: 1em;
-    margin-bottom: 1em;
   }
-  .game-board .buttons {
+  .game-board-screen .game-board .buttons {
     padding: 0;
   }
-  .game-board button {
-    width: 80%;
+  .game-board-screen .game-board button {
+    width: 90%;
     margin: 0 auto;
   }
-  .score-container {
+  .game-board-screen .score-container {
     width: 25%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .game-board-screen .score-container .player-name {
+    margin-top: 0;
+  }
+  .game-board-screen .score-container .prize-list {
+    margin-bottom: 1.5em;
+  }
+  .game-board-screen .score-container .prize-list li {
+    width: 60%;
+    height: 35px;
+    line-height: 35px;
+    /* Button Border Style */
+  }
+  .game-board-screen .score-container .prize-list li:before, .game-board-screen .score-container .prize-list li:after {
+    width: 100%;
+    height: 17px;
+  }
+  .game-board-screen .score-container .prize-list li:before {
+    top: 0px;
+    -webkit-transform: perspective(5px) rotateX(3deg);
+            transform: perspective(5px) rotateX(3deg);
+  }
+  .game-board-screen .score-container .prize-list li:after {
+    top: 17px;
+    -webkit-transform: perspective(5px) rotateX(-3deg);
+            transform: perspective(5px) rotateX(-3deg);
+  }
+  .game-board-screen .score-container .prize-list + p {
+    position: absolute;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    left: 50%;
+    -webkit-transform: translateX(-50%) rotateZ(-10deg);
+            transform: translateX(-50%) rotateZ(-10deg);
+    bottom: 0em;
+    margin: 0;
   }
 }
 @media (min-width: 996px) {
-  .game-board-screen .prizes-container .prize-list li {
-    display: block;
-  }
   .game-board .buttons {
     display: -webkit-box;
     display: -ms-flexbox;
