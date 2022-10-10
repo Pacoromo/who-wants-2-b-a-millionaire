@@ -12,19 +12,23 @@ app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
 app.timeIsUpAudio = new Audio("../assets/sounds/time-is-up.mp3")
 app.thresholdAudio = new Audio("../assets/sounds/amount-win.mp3");
 app.applauseAudio = new Audio("../assets/sounds/applause.mp3");
+app.win1MilAudio = new Audio("../assets/sounds/1000000-win.mp3");
 app.question14to9Audio = new Audio("../assets/sounds/100-1000-music.mp3");
 app.question9to5Audio = new Audio("../assets/sounds/2000-32000-music.mp3");
 app.question4Audio = new Audio("../assets/sounds/64000-music.mp3");
 app.question3and2Audio = new Audio("../assets/sounds/125000-250000-music.mp3");
 app.question1Audio = new Audio("../assets/sounds/500000-music.mp3");
 app.question0Audio = new Audio("../assets/sounds/1000000-music.mp3");
-app.win1MilAudio = new Audio("../assets/sounds/1000000-win.mp3");
-document.body.appendChild(app.question14to9Audio); // to access them through the DOM
-document.body.appendChild(app.question9to5Audio);
-document.body.appendChild(app.question4Audio);
-document.body.appendChild(app.question3and2Audio);
-document.body.appendChild(app.question1Audio);
-document.body.appendChild(app.question0Audio);
+
+//Array of all the audios that have to be stopped after answering a question
+app.allQuestionsAudio = [
+  app.question14to9Audio,
+  app.question9to5Audio,
+  app.question4Audio,
+  app.question3and2Audio,
+  app.question1Audio,
+  app.question0Audio
+];
 
 //*************************************************/
 //******************Functions*********************//
@@ -77,11 +81,8 @@ app.playerLifelinesListeners = () => {
 app.checkLifeLineSelected = () => {
   if (app.lifeLineSelected === "walk-away") {
     app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
-  }
-  //2 more stretch Goal after this
+  }//2 more stretch goals after this
 };
-
-
 
 //Screen display toggle
 
@@ -208,8 +209,7 @@ app.loadQuestion = (message, audio) => {
 //Stop Questions audio method
 
 app.stopQuestionsBackgroundAudio = () => {
-  const allAudioFiles = document.querySelectorAll("audio");
-  allAudioFiles.forEach((audioFile) => {
+  app.allQuestionsAudio.forEach((audioFile) => {
     audioFile.load();
   });
 }; // Stop Audio Method
@@ -324,10 +324,9 @@ app.currentPrize = () => {
   app.activePrize = prizes[app.currentQuestionNumber];
   //Create a variable for the amount already earned
   app.lastAmount = prizes[app.currentQuestionNumber + 1]
-  console.log(app.lastAmount);
   //print the current prize element
   app.activePrize.classList.add("active-prize");
-  console.log(app.correctAnswer);
+  console.log(app.correctAnswer);//Just for revision...It get's Really hard!
 }; // Current prize method
 
 //check answers method
@@ -421,8 +420,8 @@ app.showResults = (message, sound) => {
 
 //App Init
 app.init = () => {
-  app.startScreen();
   app.getToken();
+  app.startScreen();
   app.optionListeners();
   app.playerLifelinesListeners();
 };

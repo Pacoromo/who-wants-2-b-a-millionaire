@@ -795,6 +795,8 @@ form .button.border:hover:before, form .button.border:hover:after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 .modal-screen button {
   margin: 0.5em;
