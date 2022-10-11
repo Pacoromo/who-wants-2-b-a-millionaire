@@ -280,6 +280,10 @@ button {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 header {
   position: absolute;
   top: 0;
