@@ -2,7 +2,7 @@
 
 ## Description: 
 Who Wants to Be a Millionaire is an app that behaves just like the television show on which it is based off of.
-The player will have to answer questions that increase in diffuculty and dollar value.
+The player will have to answer multiple questions that increase in diffuculty and dollar value.
 
 * There's a total of 15 questions
 * There are three groups of questions (Easy, Medium, and Hard)
