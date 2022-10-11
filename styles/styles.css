@@ -883,9 +883,18 @@ form .button.border:hover:before, form .button.border:hover:after {
   .game-board-screen .game-board .buttons {
     padding: 0;
   }
-  .game-board-screen .game-board button {
+  .game-board-screen .game-board .buttons button {
     width: 90%;
     margin: 0 auto;
+  }
+  .game-board-screen .game-board .walk-away-btn {
+    top: 5%;
+    left: 0;
+    margin-top: 0;
+  }
+  .game-board-screen .game-board .walk-away-btn img {
+    width: 35px;
+    height: 35px;
   }
   .game-board-screen .score-container {
     width: 25%;
