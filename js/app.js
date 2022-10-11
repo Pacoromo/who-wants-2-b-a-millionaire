@@ -10,7 +10,7 @@ app.explainTheRulesAudio = new Audio("../assets/sounds/explain-the-rules.mp3");
 app.letsPlayAudio = new Audio("../assets/sounds/lets-play.mp3");
 app.correctAnswerAudio = new Audio("../assets/sounds/correct-answer.mp3");
 app.wrongAnswerAudio = new Audio("../assets/sounds/wrong-answer.mp3");
-app.timeIsUpAudio = new Audio("../assets/sounds/time-is-up.mp3")
+app.timeIsUpAudio = new Audio("../assets/sounds/time-is-up.mp3");
 app.thresholdAudio = new Audio("../assets/sounds/amount-win.mp3");
 app.applauseAudio = new Audio("../assets/sounds/applause.mp3");
 app.win1MilAudio = new Audio("../assets/sounds/1000000-win.mp3");
@@ -20,6 +20,7 @@ app.question4Audio = new Audio("../assets/sounds/64000-music.mp3");
 app.question3and2Audio = new Audio("../assets/sounds/125000-250000-music.mp3");
 app.question1Audio = new Audio("../assets/sounds/500000-music.mp3");
 app.question0Audio = new Audio("../assets/sounds/1000000-music.mp3");
+app.awwSoundEffect = new Audio("../assets/sounds/aww-sound-effect.mp3");
 
 //*************************************************/
 //******************Functions*********************//
@@ -68,30 +69,32 @@ app.optionListeners = () => {
       app.checkAnswerResults();
     });
   });
-};//options listeners
+}; //options listeners
 
 //Player Life lines options
 
 app.playerLifelinesListeners = () => {
   const buttons = document.querySelectorAll(".player-options button");
 
-  buttons.forEach(button => {
+  buttons.forEach((button) => {
     button.addEventListener("click", function () {
       clearInterval(app.timer);
-      app.selectedLifeline = this.id
+      app.selectedLifeline = this.id;
       app.checkLifeLineSelected();
-    })
+    });
   });
-};// player life lines
-
+}; // player life lines
 
 //Check Life Line Selected Method  (first Stretch goal)
 
 app.checkLifeLineSelected = () => {
   if (app.selectedLifeline === "walk-away") {
-    app.showResults(`You are leaving with: ${app.lastAmount.innerText}`, app.applauseAudio);
-  }//2 more stretch goals after this
-};//life lines
+    app.showResults(
+      `You are leaving with: ${app.lastAmount.innerText}`,
+      app.applauseAudio
+    );
+  } //2 more stretch goals after this
+}; //life lines
 
 //Screen display toggle
 
@@ -160,17 +163,16 @@ app.loadQuestion = (message, audio) => {
     token: app.token,
     amount: 1,
     type: "multiple",
-    difficulty: app.difficultyLevel,//Changes after every threshold
+    difficulty: app.difficultyLevel, //Changes after every threshold
   });
   // Use the fetch API to make a request to the open trivia API endpoint
   fetch(url)
     .then((response) => {
       if (response.ok) {
-        
+        return response.json();
       } else {
-        
+        throw new Error("Sorry, something went wrong");
       }
-      response.json();
     })
     .then((jsonResponse) => {
       /* The response is an object with the next structure 
@@ -191,10 +193,16 @@ app.loadQuestion = (message, audio) => {
       */
       //Call a method to break down information from the response object\
       app.breakDownInfo(jsonResponse.results[0]);
-      //print information on the board and hide loader when audio has finished playing      
+      //print information on the board and hide loader when audio has finished playing
       audio.onended = () => {
         app.populateBoard();
       };
+    })
+    .catch((err) => {
+      //Hide loader screen
+      app.toggleScreen(app.loaderScreen);
+      app.loaderMessage.classList.remove("text-animation");
+      app.showResults(err, app.awwSoundEffect);
     });
 }; //load questions method
 
@@ -242,7 +250,7 @@ app.populateBoard = () => {
   app.toggleScreen(app.loaderScreen);
   // Play audio according to question number
   app.playQuestionsAudio();
-};//Populate board
+}; //Populate board
 
 //Play Questions Audio accordingly
 
@@ -309,7 +317,10 @@ app.setTimer = (seconds) => {
     app.timerDisplay.textContent = timer;
     //check timing
     if (timer === 0) {
-      app.showResults(`Your time's up!<br>Please try again:`, app.timeIsUpAudio);
+      app.showResults(
+        `Your time's up!<br>Please try again:`,
+        app.timeIsUpAudio
+      );
     }
   }, 1000);
 }; //timer method
@@ -326,10 +337,10 @@ app.currentPrize = () => {
   //Add the class .active-prize to the current li[index](style accordingly)
   app.activePrize = prizes[app.currentQuestionNumber];
   //Create a variable for the amount already earned
-  app.lastAmount = prizes[app.currentQuestionNumber + 1]
+  app.lastAmount = prizes[app.currentQuestionNumber + 1];
   //print the current prize element
   app.activePrize.classList.add("active-prize");
-  console.log(app.correctAnswer);//Just for revision...It get's Really hard!
+  console.log(app.correctAnswer); //Just for revision...It get's Really hard!
 }; // Current prize method
 
 //check answers method
@@ -339,7 +350,10 @@ app.checkAnswerResults = () => {
   if (app.optionSelected === app.correctAnswer) {
     //check if we are working on the last question
     if (app.currentQuestionNumber === 0) {
-      app.showResults(`Congratulations!<br>You're now a millionaire!`, app.win1MilAudio);
+      app.showResults(
+        `Congratulations!<br>You're now a millionaire!`,
+        app.win1MilAudio
+      );
       //check if current question is 5 or 10 (money threshold)
     } else if (
       app.currentQuestionNumber === 5 ||
@@ -348,7 +362,10 @@ app.checkAnswerResults = () => {
       //add that prize to the user's prize variable
       app.playerPrize = app.activePrize.textContent;
       app.currentQuestionNumber -= 1; //go for next question
-      app.loadQuestion(`Congratulations!<br>You've just won:<br>${app.playerPrize}`, app.thresholdAudio);
+      app.loadQuestion(
+        `Congratulations!<br>You've just won:<br>${app.playerPrize}`,
+        app.thresholdAudio
+      );
     } else {
       app.currentQuestionNumber -= 1; //go for next question
       app.loadQuestion("You are correct!", app.correctAnswerAudio);
